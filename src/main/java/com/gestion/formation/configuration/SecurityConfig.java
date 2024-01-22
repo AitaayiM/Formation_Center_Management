@@ -40,10 +40,9 @@ public class SecurityConfig {
                         .requestMatchers("/formateur/**").hasRole("FORMATEUR")
                         .requestMatchers("/assistant/**").hasRole("ASSISTANT") 
                         .and()
-                    .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
-                        .and()
+                    .formLogin(form -> form
+                    .loginPage("/signin")
+                    .permitAll())
                     .rememberMe()
                     .and()
                     .logout()

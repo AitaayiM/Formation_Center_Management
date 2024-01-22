@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,6 @@ import com.gestion.formation.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
-@Secured("ADMIN")
 @Validated
 public class AuthController {
 
@@ -31,12 +31,15 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@Valid @RequestBody LoginDTO loginDto) {
         try {
+            System.out.println("dto avant response"+loginDto.getUsernameOrEmail());
             String response = authService.authenticateUser(loginDto);
+            System.out.println("response apre response"+response);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
         }
     }
+
 
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpDTO signUpDto, @RequestParam String userType) {        try {
