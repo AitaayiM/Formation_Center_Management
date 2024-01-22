@@ -1,6 +1,5 @@
 package com.gestion.formation.controller;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,7 +20,6 @@ import com.gestion.formation.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
-@Secured("ADMIN")
 @Validated
 public class AuthController {
 
@@ -37,6 +35,7 @@ public class AuthController {
             return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
         }
     }
+
 
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpDTO signUpDto, @RequestParam String userType) {        try {

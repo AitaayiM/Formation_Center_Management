@@ -3,17 +3,17 @@ package com.gestion.formation.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -27,35 +27,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().authorizeHttpRequests((authorize) ->
-        //authorize.anyRequest().authenticated()
-        {
-            try {
-                authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/formateur/**").hasRole("FORMATEUR")
-                        .requestMatchers("/assistant/**").hasRole("ASSISTANT") 
-                        .and()
-                    .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
-                        .and()
-                    .rememberMe()
-                    .and()
-                    .logout()
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        );
+        http.csrf(csrf -> csrf.disable())
+        .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(authorize ->
+                    authorize.anyRequest().authenticated()
+        ).securityMatcher("/admin**")
+        .formLogin(form -> form
+        .loginPage("/signin")
+        .permitAll())
+        .logout(log-> log
+        .logoutSuccessUrl("/login?logout")
+        .permitAll())
+        .httpBasic();
+
         return http.build();
     }
+
+   /*  @Bean
+    static GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults("ADMIN");
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -67,7 +58,21 @@ public class SecurityConfig {
                                  AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
+    @Bean
+    public UserDetailsService multipleUsers() {
+     /*
+      * Note: do not use withDefaultPasswordEncoder() method in production since its
+      * not recommended and its not safe. This is used only for development and learning purpose , 
+      * use your own password generating methods.
+      */
+       UserBuilder user = User.withDefaultPasswordEncoder();
+       InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+       manager.createUser(user.username("john_doe").password("password123").roles("ADMIN").build());
+       //manager.createUser(user.username("Pradeep").password("admin_password").roles("ADMIN").build());
+     
+     return manager;
+    }
+/* 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -79,5 +84,5 @@ public class SecurityConfig {
     // il faut chercher comment on peux remplacer cette methode si necessaire
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-    }
+    }*/
 }

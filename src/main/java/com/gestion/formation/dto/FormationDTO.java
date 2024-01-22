@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import com.gestion.formation.entity.Section;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -35,5 +37,9 @@ public class FormationDTO {
     @NotNull(message = "La liste des objectifs ne peut pas être nulle")
     @Size(min = 1, message = "La formation doit avoir au moins un objectif")
     private List<String> objectifs;
+
+    @NotNull(message = "La liste des sections ne peut pas être nulle")
+    @Size(min = 1, message = "La formation doit avoir au moins un section")
+    private List<Section> sections;
 }
 
