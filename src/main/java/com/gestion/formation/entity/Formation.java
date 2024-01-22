@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,15 +41,19 @@ public class Formation {
     @Positive(message = "Le coût doit être un nombre positif")
     private double cout;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "formation")
     private List<Objectif> objectifs;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "formation")
     private List<Section> sections;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "formation")
     private List<Evaluation> evaluations;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "formation_individu",

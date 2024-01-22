@@ -1,6 +1,5 @@
 package com.gestion.formation.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion.formation.dto.FormationDTO;
@@ -16,7 +15,6 @@ public class FormationService {
     private final FormationRepository formationRepository;
     private final FormationMapper formationMapper;
 
-    @Autowired
     public FormationService(FormationRepository formationRepository, FormationMapper formationMapper) {
         this.formationRepository = formationRepository;
         this.formationMapper = formationMapper;

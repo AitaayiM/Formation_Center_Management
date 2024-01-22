@@ -14,8 +14,8 @@ import com.gestion.formation.service.FormationService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/admin/formations")
-@Secured("ADMIN")
+@RequestMapping("/admin/formations")
+//@Secured("ADMIN")
 @Validated
 public class AdminFormationController {
 
@@ -25,6 +25,7 @@ public class AdminFormationController {
     @PostMapping
     public ResponseEntity<String> addFormation(@Valid @RequestBody FormationDTO formationDTO) {
         try {
+            System.err.println(formationDTO.toString());
             formationService.createFormation(formationDTO);
             return new ResponseEntity<>("Formation ajoutée avec succès", HttpStatus.CREATED);
         } catch (Exception e) {

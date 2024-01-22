@@ -1,6 +1,5 @@
 package com.gestion.formation.controller;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 
@@ -9,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +29,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@Valid @RequestBody LoginDTO loginDto) {
         try {
-            System.out.println("dto avant response"+loginDto.getUsernameOrEmail());
             String response = authService.authenticateUser(loginDto);
-            System.out.println("response apre response"+response);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
