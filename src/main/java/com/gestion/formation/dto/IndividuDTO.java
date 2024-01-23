@@ -1,39 +1,22 @@
-package com.gestion.formation.entity;
+package com.gestion.formation.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Individu {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class IndividuDTO {
 
     @NotBlank(message = "Le champ 'nom' de l'individu est requis")
     private String nom;
@@ -54,11 +37,5 @@ public class Individu {
     @Pattern(regexp = "\\d{10}", message = "Le numéro de téléphone doit contenir 10 chiffres")
     private String telephone;
 
-    @JsonIgnore
-    @ManyToMany
-   
-    private List<Formation> formations;
-    @ManyToOne
-    @JoinColumn(name = "formateur_id")
-    private Formateur formateur;
+    
 }
