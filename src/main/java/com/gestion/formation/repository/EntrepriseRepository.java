@@ -6,6 +6,4 @@ import com.gestion.formation.entity.Entreprise;
 
 public interface EntrepriseRepository extends JpaRepository<Entreprise, Long> {
 
-	
-	
 }

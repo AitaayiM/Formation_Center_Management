@@ -6,6 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,7 +46,8 @@ public class Entreprise {
     @Email(message = "Veuillez saisir une adresse email valide pour l'entreprise")
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "entreprise")
     private List<Planification> planifications;
-    
+
 }

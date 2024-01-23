@@ -1,5 +1,7 @@
 package com.gestion.formation.entity;
 
+import javax.validation.constraints.NotEmpty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class Remarque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Le champ 'content' du remarque ne peut pas être vide")
     private String content;
 
     @ManyToOne

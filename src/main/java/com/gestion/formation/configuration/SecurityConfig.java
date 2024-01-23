@@ -34,8 +34,7 @@ public class SecurityConfig {
         .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize ->
                     authorize.anyRequest().authenticated()
-        ).securityMatcher("/admin**")
-        
+        ).securityMatcher("/admin**")        
         .formLogin(form -> form
         .loginPage("/signin")
         .permitAll())
@@ -73,7 +72,7 @@ public class SecurityConfig {
        UserBuilder user = User.withDefaultPasswordEncoder();
        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
        manager.createUser(user.username("john_doe").password("password123").roles("ADMIN").build());
-       //manager.createUser(user.username("Pradeep").password("admin_password").roles("ADMIN").build());
+       manager.createUser(user.username("johhhn_doe").password("admin_password").roles("FORMATEUR").build());
      
      return manager;
     }
