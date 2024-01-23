@@ -1,8 +1,11 @@
 package com.gestion.formation.configuration;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,6 +35,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(authorize ->
                     authorize.anyRequest().authenticated()
         ).securityMatcher("/admin**")
+        
         .formLogin(form -> form
         .loginPage("/signin")
         .permitAll())
@@ -58,6 +62,7 @@ public class SecurityConfig {
                                  AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
     @Bean
     public UserDetailsService multipleUsers() {
      /*
@@ -72,7 +77,12 @@ public class SecurityConfig {
      
      return manager;
     }
-/* 
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+ 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -84,5 +94,5 @@ public class SecurityConfig {
     // il faut chercher comment on peux remplacer cette methode si necessaire
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-    }*/
+    }
 }

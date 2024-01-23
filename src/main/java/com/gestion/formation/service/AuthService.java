@@ -45,6 +45,14 @@ public class AuthService {
         return "User signed-in successfully!";
     }
 
+    private void mapCommonAttributes(User user, SignUpDTO signUpDto, Role role) {
+        user.setName(signUpDto.getName());
+        user.setUsername(signUpDto.getUsername());
+        user.setEmail(signUpDto.getEmail());
+        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setRoles(Collections.singleton(role));
+    }
+
     public String registerUser(@Valid SignUpDTO signUpDto, String userType) {
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
             return "Username is already taken!";
@@ -60,24 +68,22 @@ public class AuthService {
         if("ADMIN".equals(userType)) {
             role = roleRepository.findByName("ROLE_ADMIN").orElseThrow(() -> new RuntimeException("Role not found!"));
             user= new Admin();
+            mapCommonAttributes(user, signUpDto, role);
         } else if ("FORMATEUR".equals(userType)) {
             role = roleRepository.findByName("ROLE_FORMATEUR").orElseThrow(() -> new RuntimeException("Role not found!"));
             user = new Formateur();
+            mapCommonAttributes(user, signUpDto, role);
+            ((Formateur) user).setCompetences(signUpDto.getCompetences());
+            ((Formateur) user).setRemarques(signUpDto.getRemarques());
         } else if ("ASSISTANT".equals(userType)) {
             role = roleRepository.findByName("ROLE_ASSISTANT").orElseThrow(() -> new RuntimeException("Role not found!"));
             user = new Assistant();
+            mapCommonAttributes(user, signUpDto, role);
         } else {
             return "Invalid user type!";
         }
 
-        user.setName(signUpDto.getName());
-        user.setUsername(signUpDto.getUsername());
-        user.setEmail(signUpDto.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-        user.setRoles(Collections.singleton(role));
         userRepository.save(user);
-
-
         return "User registered successfully";
     }
 }

@@ -6,6 +6,4 @@ import com.gestion.formation.entity.Formateur;
 
 public interface FormateurRepository extends JpaRepository<Formateur, Long> {
 
-	
-	
 }
