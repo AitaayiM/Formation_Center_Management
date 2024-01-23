@@ -15,11 +15,11 @@ import com.gestion.formation.service.FormateurService;
 @RestController
 @RequestMapping("/admin/formateurs")
 //@Secured("ADMIN")
-public class AdminController {
+public class FormateurExterneController {
 
     private final FormateurService formateurService;
 
-    public AdminController(FormateurService formateurService) {
+    public FormateurExterneController(FormateurService formateurService) {
         this.formateurService = formateurService;
     }
 

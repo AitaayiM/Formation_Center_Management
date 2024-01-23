@@ -2,7 +2,13 @@ package com.gestion.formation.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import java.util.Set;
+
+import com.gestion.formation.entity.Competence;
+import com.gestion.formation.entity.Remarque;
 
 import lombok.Data;
 
@@ -22,4 +28,9 @@ public class SignUpDTO {
     @NotBlank(message = "Le mot de passe ne peut pas être vide.")
     @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères.")
     private String password;
+
+    @NotEmpty(message = "La liste des compétences ne peut pas être vide")
+    private Set<Competence> competences;
+
+    private Set<Remarque> remarques;
 }

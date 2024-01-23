@@ -33,6 +33,9 @@ public class Formateur extends User {
     )
     private Set<Competence> competences;
 
+    @OneToMany(mappedBy = "formateur", cascade = CascadeType.ALL)
+    private Set<Remarque> remarques;
+
     @NotEmpty(message = "La liste des planifications ne peut pas être vide")
     @OneToMany(mappedBy = "formateur")
     private List<Planification> planifications;
