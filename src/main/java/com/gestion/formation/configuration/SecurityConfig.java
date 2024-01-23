@@ -91,7 +91,7 @@ public class SecurityConfig {
         return authProvider;
     }
     
-    // il faut chercher comment on peux remplacer cette methode si necessaire
+    // il faut chercher 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
