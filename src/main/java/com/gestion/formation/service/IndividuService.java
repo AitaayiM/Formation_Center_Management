@@ -42,16 +42,6 @@ public class IndividuService {
 	        return individuRepository.save(nouvelIndividu);
 	    }
 
-	    public void affecterFormateur(Long individuId, Long formateurId) {
-	        Individu individu = individuRepository.findById(individuId)
-	                .orElseThrow(() -> new EntityNotFoundException("Individu non trouvé avec l'ID : " + individuId));
-
-	        Formateur formateur = formateurRepository.findById(formateurId)
-	                .orElseThrow(() -> new EntityNotFoundException("Formateur non trouvé avec l'ID : " + formateurId));
-
-	        individu.setFormateur(formateur);
-
-	        individuRepository.save(individu);
-	    }
+	    
 	
 }

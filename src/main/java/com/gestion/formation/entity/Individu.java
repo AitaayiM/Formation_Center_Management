@@ -58,7 +58,6 @@ public class Individu {
     @ManyToMany
    
     private List<Formation> formations;
-    @ManyToOne
-    @JoinColumn(name = "formateur_id")
-    private Formateur formateur;
+   
+    
 }

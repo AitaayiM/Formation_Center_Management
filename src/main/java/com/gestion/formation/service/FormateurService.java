@@ -20,7 +20,7 @@ public class FormateurService {
 
     public void addFormateur(FormateurDTO formateurDTO) {
         Formateur formateur = formateurMapper.convertToEntity(formateurDTO);
-        // Ajoutez la logique pour enregistrer le formateur dans le repository
+        
         formateurRepository.save(formateur);
     }
 }
