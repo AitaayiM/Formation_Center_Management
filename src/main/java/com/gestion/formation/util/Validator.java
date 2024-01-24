@@ -22,4 +22,18 @@ public class Validator {
         LocalDate localDate = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
         return localDate.isBefore(LocalDate.now());
     }
+
+    public static boolean isDateInTheFuture(Date... dates){
+        for (Date date : dates) {
+            LocalDate localDate = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            if(localDate.isBefore(localDate.now())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isGreaterThan(Date debut, Date fin){
+        return fin.after(debut);
+    }
 }

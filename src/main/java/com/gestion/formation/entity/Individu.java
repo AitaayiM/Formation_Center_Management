@@ -56,5 +56,6 @@ public class Individu {
 
     @JsonIgnore
     @ManyToMany
-    private List<Formation> formations;;
+    private List<Formation> formations;
+
 }
