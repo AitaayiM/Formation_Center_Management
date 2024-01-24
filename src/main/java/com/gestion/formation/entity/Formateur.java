@@ -41,4 +41,7 @@ public class Formateur extends User {
     @OneToMany(mappedBy = "formateur")
     private List<Planification> planifications;
 
+    @OneToMany(mappedBy = "formateur")
+    private List<Groupe> groupes;
+
 }

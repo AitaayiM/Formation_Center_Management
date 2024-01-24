@@ -58,4 +58,7 @@ public class Individu {
     @ManyToMany
     private List<Formation> formations;
 
+    @ManyToMany(mappedBy = "individus")
+    private List<Groupe> groupes;
+
 }

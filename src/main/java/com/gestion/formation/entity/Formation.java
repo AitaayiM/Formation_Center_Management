@@ -61,4 +61,7 @@ public class Formation {
         inverseJoinColumns = @JoinColumn(name = "individu_id")
     )
     private List<Individu> individus;
+
+    @OneToMany(mappedBy = "formation")
+    private List<Groupe> groupes;
 }
