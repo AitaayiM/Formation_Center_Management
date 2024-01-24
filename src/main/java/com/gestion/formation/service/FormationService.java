@@ -20,14 +20,12 @@ public class FormationService {
         this.formationMapper = formationMapper;
     }
 
-    public FormationDTO createFormation(FormationDTO formationDTO) {
+    public void createFormation(FormationDTO formationDTO) {
 
         Optional<Formation> formation = Optional.ofNullable(formationMapper.convertToEntity(formationDTO));
         if (formation.isPresent()) {
-            Formation savedFormation = formationRepository.save(formation.get());
-            return formationMapper.convertToDTO(savedFormation);
+            formationRepository.save(formation.get());
         }
-        throw new RuntimeException("La conversion de l'entité Formation a échoué.");
     }
 }
 

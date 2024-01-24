@@ -33,6 +33,7 @@ public class Formateur extends User {
     )
     private Set<Competence> competences;
 
+    @NotEmpty(message = "La liste des remarques ne peut pas être vide")
     @OneToMany(mappedBy = "formateur", cascade = CascadeType.ALL)
     private Set<Remarque> remarques;
 

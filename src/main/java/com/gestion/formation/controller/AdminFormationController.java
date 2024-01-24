@@ -3,7 +3,6 @@ package com.gestion.formation.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,6 @@ public class AdminFormationController {
     @PostMapping
     public ResponseEntity<String> addFormation(@Valid @RequestBody FormationDTO formationDTO) {
         try {
-            System.err.println(formationDTO.toString());
             formationService.createFormation(formationDTO);
             return new ResponseEntity<>("Formation ajoutée avec succès", HttpStatus.CREATED);
         } catch (Exception e) {
