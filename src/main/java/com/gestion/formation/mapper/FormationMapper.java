@@ -1,5 +1,7 @@
 package com.gestion.formation.mapper;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -18,5 +20,10 @@ public class FormationMapper {
     public Formation convertToEntity(FormationDTO formationDTO) {
         return modelMapper.map(formationDTO, Formation.class);
     }
+
+	public List<FormationDTO> toDTOList(List<Formation> formations) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
