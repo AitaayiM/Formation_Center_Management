@@ -9,6 +9,10 @@ import com.gestion.formation.entity.Formation;
 @Repository
 public interface FormationRepository extends JpaRepository <Formation, Long> {
 
+    List<Formation> findByCategorie(String categorie);
+
+    List<Formation> findByVille(String ville);
+
 	/* 
 	List<Formation> findByCategorieAndVilleAndDate(String categorie, String ville, String date);
 	List<Formation> findByCategorieAndDate(String categorie, String date);

@@ -34,6 +34,12 @@ public class FormationDTO {
     @NotBlank(message = "La description ne peut pas être vide")
     private String description;
 
+    @NotBlank(message = "Le champ 'categorie' de la formation est requis")
+    private String categorie;
+
+    @NotBlank(message = "Le champ 'ville' de la formation est requis")
+    private String ville;
+
     @NotNull(message = "La liste des objectifs ne peut pas être nulle")
     @Size(min = 1, message = "La formation doit avoir au moins un objectif")
     private List<String> objectifs;

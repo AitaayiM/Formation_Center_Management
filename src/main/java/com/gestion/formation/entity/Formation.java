@@ -41,6 +41,12 @@ public class Formation {
     @Positive(message = "Le coût doit être un nombre positif")
     private double cout;
 
+    @NotBlank(message = "Le champ 'categorie' de la formation est requis")
+    private String categorie;
+
+    @NotBlank(message = "Le champ 'ville' de la formation est requis")
+    private String ville;
+
     @JsonIgnore
     @OneToMany(mappedBy = "formation")
     private List<Objectif> objectifs;

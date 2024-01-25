@@ -2,6 +2,8 @@ package com.gestion.formation.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,11 +31,13 @@ public class Groupe {
     private String nom;
 
     @ManyToOne
-    @JoinColumn(name = "formation_id")  // Assurez-vous que le nom correspond à celui dans la table Groupe
+    @JoinColumn(name = "formation_id")
+    @JsonIgnore  // Assurez-vous que le nom correspond à celui dans la table Groupe
     private Formation formation;
 
     @ManyToOne
     @JoinColumn(name = "formateur_id")
+    @JsonIgnore
     private Formateur formateur;
 
     @ManyToMany
@@ -41,6 +45,7 @@ public class Groupe {
         name = "groupe_individu",
         joinColumns = @JoinColumn(name = "groupe_id"),
         inverseJoinColumns = @JoinColumn(name = "individu_id"))
+    @JsonIgnore
     private List<Individu> individus;
 
 }
