@@ -8,7 +8,7 @@ import com.gestion.formation.entity.Evaluation;
 
 public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
-	//List<Evaluation> findByFormationId(Long formationId);
+	List<Evaluation> findByFormationId(Long formationId);
     
 }
 

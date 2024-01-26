@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 
 import java.util.Date;
 
-import javax.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.FutureOrPresent;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;

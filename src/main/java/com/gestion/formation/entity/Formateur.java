@@ -3,7 +3,7 @@ package com.gestion.formation.entity;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;

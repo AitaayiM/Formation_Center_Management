@@ -1,7 +1,7 @@
 package com.gestion.formation.entity;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

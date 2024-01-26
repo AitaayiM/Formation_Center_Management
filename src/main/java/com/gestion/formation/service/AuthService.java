@@ -20,7 +20,7 @@ import com.gestion.formation.repository.RoleRepository;
 
 import java.util.Collections;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Service
 public class AuthService {

@@ -1,6 +1,6 @@
 package com.gestion.formation.entity;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -3,7 +3,7 @@ package com.gestion.formation.controller;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
