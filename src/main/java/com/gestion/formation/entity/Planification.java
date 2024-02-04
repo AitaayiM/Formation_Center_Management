@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.FutureOrPresent;
 
 import jakarta.persistence.Id;
@@ -31,14 +33,17 @@ public class Planification {
 
     @ManyToOne
     @JoinColumn(name = "formation_id")
+    @JsonIgnore
     private Formation formation;
 
     @ManyToOne
     @JoinColumn(name = "formateur_id")
+    @JsonIgnore
     private Formateur formateur;
 
     @ManyToOne
     @JoinColumn(name = "entreprise_id")
+    @JsonIgnore
     private Entreprise entreprise;
 
     @Temporal(TemporalType.TIMESTAMP)

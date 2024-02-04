@@ -31,8 +31,7 @@ public class FormationService {
         this.formationMapper = formationMapper;
     }
 
-    public void createFormation(FormationDTO formationDTO) {
-
+    public void createFormation(FormationDTO formationDTO){
         Optional<Formation> formation = Optional.ofNullable(formationMapper.convertToEntity(formationDTO));
         if (formation.isPresent()) {
             formationRepository.save(formation.get());
@@ -40,7 +39,12 @@ public class FormationService {
     }
 
     public List<Formation> getAllFormations() {
-        return formationRepository.findAll();
+        List<Formation> formations= formationRepository.findAll();
+        formations.forEach(formation->{
+            List<Planification> planifications = planificationRepository.findByFormation(formation);
+            formation.setPlanifications(planifications);
+        });
+        return formations;
     }
  
     public List<Formation> getFormationsWithFilters(String categorie, String ville, Date date) {
@@ -82,4 +86,12 @@ public class FormationService {
             return formationRepository.findAll();
         }
     }*/
+
+    public List<Formation> findAllByIdIn(List<Long> formationIds) {
+        return formationRepository.findAllById(formationIds);
+    }
+
+    public Formation findById(Long formationId) {
+        return formationRepository.getReferenceById(formationId);
+    }
 }

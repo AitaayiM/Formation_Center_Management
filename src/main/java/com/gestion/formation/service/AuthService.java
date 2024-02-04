@@ -8,6 +8,8 @@ import com.gestion.formation.entity.Formateur;
 import com.gestion.formation.entity.Role;
 import com.gestion.formation.entity.User;
 import com.gestion.formation.service.AuthService;
+import com.gestion.formation.util.FormateurValidationGroup;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
 import com.gestion.formation.repository.UserRepository;
 import com.gestion.formation.repository.RoleRepository;
 
@@ -53,7 +57,8 @@ public class AuthService {
         user.setRoles(Collections.singleton(role));
     }
 
-    public String registerUser(@Valid SignUpDTO signUpDto, String userType) {
+    public String registerUser(@Validated(FormateurValidationGroup.class) SignUpDTO signUpDto, String userType) {
+        
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
             return "Username is already taken!";
         }
@@ -70,11 +75,22 @@ public class AuthService {
             user= new Admin();
             mapCommonAttributes(user, signUpDto, role);
         } else if ("FORMATEUR".equals(userType)) {
+            System.out.println("role"+userType);
             role = roleRepository.findByName("ROLE_FORMATEUR").orElseThrow(() -> new RuntimeException("Role not found!"));
+            System.out.println("role1");
+
             user = new Formateur();
+            System.out.println("role2");
+
             mapCommonAttributes(user, signUpDto, role);
+            System.out.println("role3");
+
             ((Formateur) user).setCompetences(signUpDto.getCompetences());
+            System.out.println("role4");
+
             ((Formateur) user).setRemarques(signUpDto.getRemarques());
+            System.out.println("role5");
+
         } else if ("ASSISTANT".equals(userType)) {
             role = roleRepository.findByName("ROLE_ASSISTANT").orElseThrow(() -> new RuntimeException("Role not found!"));
             user = new Assistant();
@@ -82,8 +98,13 @@ public class AuthService {
         } else {
             return "Invalid user type!";
         }
+        System.out.println("role6");
+        System.out.println("formateur : "+((Formateur) user).getCompetences().iterator().next().getDomain());
+        System.out.println("formateur : "+((Formateur) user).getRemarques().iterator().next().getContent());
 
-        userRepository.save(user);
+        userRepository.save(user).notify();
+        System.out.println("role7");
+
         return "User registered successfully";
     }
 }

@@ -1,9 +1,10 @@
 package com.gestion.formation.configuration;
 
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,14 +23,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import com.gestion.formation.entity.Role;
+import com.gestion.formation.repository.UserRepository;
+import com.gestion.formation.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@Validated
+@Component
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     public JavaMailSender getJavaMailSender() {
@@ -55,24 +65,24 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
         .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize ->
-                    authorize.anyRequest().authenticated()
-        ).securityMatcher("/admin**")        
+                    authorize
+                    .requestMatchers("/auth/signin").permitAll()
+                    .requestMatchers("/auth/admin/signup**").authenticated()
+                    .requestMatchers("/auth/au/login").permitAll()
+                    .requestMatchers("/admin**").hasRole("ADMIN")
+                    
+        ).securityMatcher("/admin")  
         .formLogin(form -> form
-        .loginPage("/signin")
+        .loginPage("/auth/au/login")
         .permitAll())
         .logout(log-> log
         .logoutSuccessUrl("/login?logout")
-        .permitAll())
-        .httpBasic();
+        .permitAll());
+        
 
         return http.build();
     }
-
-   /*  @Bean
-    static GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        return new GrantedAuthorityDefaults("ADMIN");
-    }*/
-
+ 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -83,7 +93,7 @@ public class SecurityConfig {
                                  AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
+ 
     @Bean
     public UserDetailsService multipleUsers() {
      /*
@@ -91,17 +101,30 @@ public class SecurityConfig {
       * not recommended and its not safe. This is used only for development and learning purpose , 
       * use your own password generating methods.
       */
+       List<com.gestion.formation.entity.User> users = userRepository.findAll();;
        UserBuilder user = User.withDefaultPasswordEncoder();
        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-       manager.createUser(user.username("john_doe").password("password123").roles("ADMIN").build());
-       manager.createUser(user.username("johhhn_doe").password("admin_password").roles("FORMATEUR").build());
+       for (com.gestion.formation.entity.User User : users) {
+            Iterator<Role> roles= User.getRoles().iterator();
+            while (roles.hasNext()) {
+                String role = roles.next().getName();
+                switch (role) {
+                    case "ROLE_ADMIN":
+                        manager.createUser(user.username(User.getUsername()).password(User.getPassword()).roles("ADMIN").build());
+                        break;
+                    case "ROLE_FORMATEUR":
+                        manager.createUser(user.username(User.getUsername()).password(User.getPassword()).roles("FORMATEUR").build());
+                        break;
+                    case "ROLE_ASSISTANT":
+                        manager.createUser(user.username(User.getUsername()).password(User.getPassword()).roles("ASSISTANT").build());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
      
      return manager;
-    }
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
     }
  
     @Bean
@@ -111,16 +134,6 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-    
-    // il faut chercher 
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
-     /* 
-    @Bean
-	public LocalValidatorFactoryBean validator() {
-		return new LocalValidatorFactoryBean();
-	}*/
 
 
 

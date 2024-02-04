@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestion.formation.dto.PlanificationDTO;
 import com.gestion.formation.entity.Planification;
 import com.gestion.formation.service.PlanificationService;
 
@@ -22,7 +23,7 @@ public class PlanificationController {
     private PlanificationService planificationService;
 
     @PostMapping
-    public ResponseEntity<String> planifierFormation(@RequestBody Planification planification) {
+    public ResponseEntity<String> planifierFormation(@RequestBody PlanificationDTO planification) {
         try {
             planificationService.planifierFormation(planification);
             return new ResponseEntity<>("Formation planifiée avec succès", HttpStatus.CREATED);

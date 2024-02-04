@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gestion.formation.dto.PlanificationDTO;
 import com.gestion.formation.entity.Entreprise;
 import com.gestion.formation.entity.Formateur;
 import com.gestion.formation.entity.Formation;
 import com.gestion.formation.entity.Planification;
+import com.gestion.formation.mapper.PlanificationMapper;
 import com.gestion.formation.repository.EntrepriseRepository;
 import com.gestion.formation.repository.FormateurRepository;
 import com.gestion.formation.repository.FormationRepository;
@@ -26,8 +28,11 @@ public class PlanificationService {
     private FormateurRepository formateurRepository;
     @Autowired
     private EntrepriseRepository entrepriseRepository;
+    @Autowired
+    private PlanificationMapper planificationMapper;
 
-    public void planifierFormation(Planification planification) {
+
+    public void planifierFormation(PlanificationDTO planification) {
         // Assurez-vous que les formations, formateurs et entreprises existent avant de les associer
         Formation formation = formationRepository.findById(planification.getFormation().getId())
                 .orElseThrow(() -> new RuntimeException("Formation non trouvée"));
@@ -46,11 +51,12 @@ public class PlanificationService {
             throw new IllegalArgumentException("La date de fin doit être supérieure à la date de début");
         }
 
-        planification.setFormation(formation);
-        planification.setFormateur(formateur);
-        planification.setEntreprise(entreprise);
+        Planification planificationToSave = planificationMapper.dtoToEntity(planification);
+        planificationToSave.setFormation(formation);
+        planificationToSave.setFormateur(formateur);
+        planificationToSave.setEntreprise(entreprise);
 
-        planificationRepository.save(planification);
+        planificationRepository.save(planificationToSave);
     }
 
     public List<Planification> getListePlanifications() {

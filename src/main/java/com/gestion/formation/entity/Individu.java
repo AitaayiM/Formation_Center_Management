@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gestion.formation.util.Validator;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -27,7 +28,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Individu {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,7 +49,7 @@ public class Individu {
     @Email(message = "Veuillez saisir une adresse email valide")
     private String email;
 
-    @Pattern(regexp = "\\d{10}", message = "Le numéro de téléphone doit contenir 10 chiffres")
+    @Pattern(regexp = ""+Validator.TELEPONE_PATTERN+"", message = "Le numéro de téléphone doit contenir 10 chiffres")
     private String telephone;
 
     @JsonIgnore
@@ -56,6 +57,7 @@ public class Individu {
     private List<Formation> formations;
 
     @ManyToMany(mappedBy = "individus")
+    @JsonIgnore
     private List<Groupe> groupes;
 
 }

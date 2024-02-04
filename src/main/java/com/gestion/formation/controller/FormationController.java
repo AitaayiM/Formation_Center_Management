@@ -3,8 +3,6 @@ package com.gestion.formation.controller;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -16,21 +14,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.gestion.formation.dto.FormationDTO;
 import com.gestion.formation.entity.Formation;
 import com.gestion.formation.service.FormationService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/admin/formations")
+@RequestMapping("/formations")
 //@Secured("ADMIN")
 @Validated
-public class AdminFormationController {
+public class FormationController {
 
     @Autowired
     private FormationService formationService;
 
-    @PostMapping
+    @PostMapping("/admin")
     public ResponseEntity<String> addFormation(@Valid @RequestBody FormationDTO formationDTO) {
         try {
             formationService.createFormation(formationDTO);
@@ -47,6 +46,15 @@ public class AdminFormationController {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
 
         return formationService.getFormationsWithFilters(categorie, ville, date);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Formation>> getAllFormations(){
+        List<Formation> formations = formationService.getAllFormations();
+        if (formations.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(formations);
     }
 }
 

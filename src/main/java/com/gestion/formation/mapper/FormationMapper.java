@@ -15,8 +15,9 @@ public class FormationMapper {
         return modelMapper.map(formation, FormationDTO.class);
     }
 
-    public Formation convertToEntity(FormationDTO formationDTO) {
-        return modelMapper.map(formationDTO, Formation.class);
+    public Formation convertToEntity(FormationDTO formationDTO){
+        Formation formation = modelMapper.map(formationDTO, Formation.class);
+        return formation;
     }
 }
 

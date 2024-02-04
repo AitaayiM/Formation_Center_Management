@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gestion.formation.entity.Individu;
 import com.gestion.formation.service.EvaluationService;
 import com.gestion.formation.service.IndividuService;
+import com.gestion.formation.util.Validator;
 
 @RestController
-@RequestMapping("/admin/inscriptions")
+@RequestMapping("/inscriptions")
 public class IndividuController {
 
     @Autowired
@@ -45,14 +47,19 @@ public class IndividuController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<String> inscrireIndividu(@RequestParam Long formationId, @RequestBody @Valid Individu individu) {
-        try{
+    @PostMapping("/individu")
+    public ResponseEntity<?> inscrireIndividu(@RequestParam Long formationId, @RequestBody @Valid Individu individu, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                // Si des erreurs de validation sont présentes, renvoyer la liste des erreurs au frontend
+                return new ResponseEntity<>(Validator.getValidationErrors(bindingResult), HttpStatus.BAD_REQUEST);
+            }
+    
             individuService.inscrireIndividu(formationId, individu);
-        return new ResponseEntity<>("Individu ajouté avec succès", HttpStatus.CREATED);
-    } catch (Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Individu ajouté avec succès", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-}
 
 }

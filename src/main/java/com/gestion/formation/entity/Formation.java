@@ -3,10 +3,12 @@ package com.gestion.formation.entity;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +37,9 @@ public class Formation {
     @NotBlank(message = "Le champ 'titre' de la formation est requis")
     private String titre;
 
+    @NotBlank(message = "La description ne peut pas être vide")
+    private String description;
+
     @Positive(message = "Le nombre d'heures doit être un nombre positif")
     private int nombreHeures;
 
@@ -47,13 +52,27 @@ public class Formation {
     @NotBlank(message = "Le champ 'ville' de la formation est requis")
     private String ville;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "formation")
+    @NotEmpty(message = "La liste des objectifs ne peut pas être vide")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "formation_objectifs",
+        joinColumns = @JoinColumn(name = "formation_id"),
+        inverseJoinColumns = @JoinColumn(name = "objectif_id")
+    )
     private List<Objectif> objectifs;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "formation")
+    @NotEmpty(message = "La liste des sections ne peut pas être vide")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "formation_sections",
+        joinColumns = @JoinColumn(name = "formation_id"),
+        inverseJoinColumns = @JoinColumn(name = "section_id")
+    )
     private List<Section> sections;
+
+    
+    @OneToMany(mappedBy = "formation")
+    private List<Planification> planifications; // Ajouter une liste de planifications
 
     @JsonIgnore
     @OneToMany(mappedBy = "formation")

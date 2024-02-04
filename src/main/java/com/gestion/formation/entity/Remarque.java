@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +24,5 @@ public class Remarque {
 
     @NotEmpty(message = "Le champ 'content' du remarque ne peut pas être vide")
     private String content;
-
-    @ManyToOne
-    private Formateur formateur;
 
 }

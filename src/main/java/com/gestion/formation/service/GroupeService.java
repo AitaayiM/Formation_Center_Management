@@ -14,7 +14,6 @@ import com.gestion.formation.repository.FormateurRepository;
 import com.gestion.formation.repository.FormationRepository;
 import com.gestion.formation.repository.GroupeRepository;
 import com.gestion.formation.repository.IndividuRepository;
-import com.gestion.formation.util.Validator;
 
 import jakarta.persistence.EntityNotFoundException;
 
