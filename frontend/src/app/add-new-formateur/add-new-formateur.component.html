@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add module</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+  <div class="main-block">
+    <div class="left-part">
+      <i class="fas fa-graduation-cap"></i>
+      <h1>Register now</h1>
+      <p>CenterUniv provides perfect environment for training.</p>
+    </div>
+    <form  (submit)="addCoach()">
+      <div class="title">
+        <i class="fas fa-pencil-alt"></i>
+        <h2>Register here</h2>
+      </div>
+      <div class="info">
+        <input type="text" name="name" placeholder="Name" [(ngModel)]="coach.name" required>
+        <input type="text" name="username" placeholder="Username" [(ngModel)]="coach.username" required>
+        <input type="text" name="email" placeholder="Email" [(ngModel)]="coach.email" required>
+        <input type="password" name="password" placeholder="Password" [(ngModel)]="coach.password" required>
+        <label>Skills</label>
+          <input type="text" name="domain" placeholder="Domain" [(ngModel)]="newCompetence.domain" required>
+          <select name="level" [(ngModel)]="newCompetence.level" required>
+            <option value="Level" selected>Level</option>
+            <option value="knowledge">knowledge</option>
+            <option value="Beginner">Beginner</option>
+            <option value="weak">weak</option>
+            <option value="middle">middle</option>
+            <option value="strong">strong</option>
+          </select>
+          <ng-container *ngIf="errorSkill" class="error-message">{{ errorSkill }}</ng-container>
+          <button type="button" class="btn btn-primary" (click)="addSkill()">Add skill</button>
+        <ul class="character">
+          <li *ngFor="let competence of coach.competences">{{ competence.domain }} - {{ competence.level }}</li>
+        </ul>
+        <label>Notes</label>
+        <input type="text" name="content" placeholder="Note" [(ngModel)]="newRemarque.content" required>
+        <ng-container *ngIf="errorNote" class="error-message">{{ errorNote }}</ng-container>
+        <button type="button" class="btn btn-primary" (click)="addNote()">Add Note</button>
+        <ul class="character">
+          <li *ngFor="let remarque of coach.remarques">{{ remarque.content }}</li>
+        </ul>
+      </div>
+      <div *ngIf="Message" class="error-message">{{ Message }}</div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+
+</html>
+

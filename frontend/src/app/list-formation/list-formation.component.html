@@ -1,0 +1,22 @@
+<div *ngFor="let form of shared.formations" [style] = "blur">
+<div class="parent">
+  <div class="card">
+      <div class="content-box">
+          <span class="card-title">{{form?.titre}}</span>
+          <p class="card-content">
+              {{form?.description}}.
+          </p>
+          <span class="see-more" (click)="onSeeMoreClick(form)">See more</span>
+      </div>
+      <div class="date-box">
+        <div  *ngFor="let planification of form?.planifications">
+          <span class="month">{{ planification.dateDebut | date: 'MMM' }}</span>
+          <span class="date">{{ planification.dateDebut | date: 'dd' }}</span>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+<div class="right-side-component " *ngIf="dataFormationComponent">
+  <app-data-formation></app-data-formation>
+</div>

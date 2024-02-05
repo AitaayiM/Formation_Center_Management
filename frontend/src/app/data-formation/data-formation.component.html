@@ -1,0 +1,59 @@
+<form class="form">
+  <div class="info__close" (click)="onClose()"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20"><path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path></svg></div>
+    <div class="banner"></div>
+    <label class="title">{{list.selectedFormation?.titre}}</label>
+    <p class="description">{{list.selectedFormation?.description}}
+      <br>
+      City : {{list.selectedFormation?.ville}}
+      <br>
+      Category : {{list.selectedFormation?.categorie}}
+      <br>
+      Number of formation hours : {{list.selectedFormation?.nombreHeures}}
+    </p>
+    <div class="tab-container">
+      <button class="tab tab--1" (click)="onCoachClick()">Apply as a coach</button>
+      <button class="tab tab--2" (click)="onTraineeClick()">Apply as a trainee</button>
+      <div class="indicator"></div>
+    </div>
+
+    <div class="benefits">
+      <span>Formation objectives</span>
+      <ul>
+        <li *ngFor="let objectif of list.selectedFormation?.objectifs">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="16" width="16">
+            <rect fill="black" rx="8" height="16" width="16"></rect>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="white" d="M5 8.5L7.5 10.5L11 6"></path>
+          </svg>
+          <span>{{objectif?.description}}</span>
+        </li>
+      </ul>
+      <span>Formation sections</span>
+      <ul>
+        <li *ngFor="let section of list.selectedFormation?.sections">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="16" width="16">
+            <rect fill="black" rx="8" height="16" width="16"></rect>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="white" d="M5 8.5L7.5 10.5L11 6"></path>
+          </svg>
+          <span>{{section?.title}}</span>
+          <ul>
+            <li *ngFor="let cour of section?.cours">
+              <span>{{cour?.title}}</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="modal--footer">
+      <label class="price"><sup>$</sup>{{list.selectedFormation?.cout}}<sub>/mo</sub></label>
+    </div>
+    <div class="separator"  *ngIf="traineeRegistration || coachRegistration">
+      <ng-container  *ngIf="traineeRegistration">
+        <app-a-registration></app-a-registration>
+      </ng-container>
+      <ng-container  *ngIf="coachRegistration">
+        <app-add-formateur></app-add-formateur>
+      </ng-container>
+    </div>
+</form>
+

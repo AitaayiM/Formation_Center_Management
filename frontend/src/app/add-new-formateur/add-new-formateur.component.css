@@ -1,0 +1,121 @@
+body, div, form, input, select, p {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  color: #2b2f2f;
+
+  }
+  body {
+    background: #FFFFFF;
+    background-size: cover;
+  }
+  h1, h2 {
+  text-transform: uppercase;
+  font-weight: 400;
+  }
+  h2 {
+  margin: 0 0 0 8px;
+  }
+  .main-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 25px;
+  background: #FFFFFF;
+
+  }
+  .left-part, form {
+  padding: 25px;
+  }
+  .left-part {
+  text-align: center;
+  }
+  .fa-graduation-cap {
+  font-size: 72px;
+  }
+  form {
+    background: linear-gradient(45deg, #f0f5f5, #e6e1e9);
+  }
+  .title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  }
+  .info {
+  display: flex;
+  flex-direction: column;
+  }
+  input, select{
+  padding: 5px;
+  margin-bottom: 30px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #eee;
+  }
+
+  input::placeholder {
+    color: #2B2B2F;
+  }
+  option:focus {
+  border: none;
+  }
+  option {
+  background: #2B2B2F;
+  border: none;
+  }
+  .checkbox input {
+  margin: 0 10px 0 0;
+  vertical-align: middle;
+  }
+  .checkbox a {
+  color: #26a9e0;
+  }
+  .checkbox a:hover {
+    color: #2B2B2F;
+  }
+  .btn-item, button {
+  padding: 10px 5px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: none;
+  background: #26a9e0;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  color: #2B2B2F;
+  }
+  .btn-item {
+  display: inline-block;
+  margin: 20px 5px 0;
+  }
+  button {
+    background: #FFFFFF;
+    width: 100%;
+  }
+  button:hover, .btn-item:hover {
+  background: #acc9c9;
+  }
+  @media (min-width: 568px) {
+
+  .main-block {
+  flex-direction: row;
+  height: calc(100% - 50px);
+  }
+  .left-part, form {
+  flex: 1;
+  height: auto;
+  }
+  }
+  
+  .character {
+    padding: 5px;
+    margin-top: 15px;
+    list-style: none;
+    text-transform: capitalize;
+  }
+
+  .character li:first-child{display: none;}
