@@ -37,7 +37,10 @@ public class EntrepriseController {
     @GetMapping
     public ResponseEntity<List<Entreprise>> getListeEntreprises() {
         List<Entreprise> entreprises = entrepriseService.getListeEntreprises();
-        return new ResponseEntity<>(entreprises, HttpStatus.OK);
+        if (entreprises.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(entreprises);
     }
 
 }

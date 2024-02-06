@@ -15,6 +15,7 @@ import { AddFormateurComponent } from './list-formation/data-formation/add-forma
 import { DataFormationComponent } from './list-formation/data-formation/data-formation.component';
 import { ListFormationComponent } from './list-formation/list-formation.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PlanificationComponent } from './list-formation/planification/planification.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     AddAdminAssistantComponent,
     AddNewFormationComponent,
     AddNewEntrepriseComponent,
-    ListCompanyComponent
+    ListCompanyComponent,
+    PlanificationComponent
   ],
   imports: [
     BrowserModule,

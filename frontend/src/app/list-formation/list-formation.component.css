@@ -117,7 +117,7 @@
   right:0;
 }
 
-app-data-formation{
+.plan-seeMore {
   position: relative;
   background-color: #ffffff;
   box-shadow: 1px 0px 28px 4px #0bdd12;
@@ -125,6 +125,5 @@ app-data-formation{
   margin: auto;
   border-radius: 10px;
   width: 600px;
-
 }
 .character li:first-child{display: none;}

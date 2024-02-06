@@ -1,5 +1,7 @@
 package com.gestion.formation.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import com.gestion.formation.service.FormationService;
 import com.gestion.formation.util.Validator;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/formateurs")
@@ -68,6 +72,16 @@ public class FormateurExterneController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Formateur>> getFormateurs() {
+        List<Formateur> formateurs = formateurService.getAllFormateurs();
+        if (formateurs.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(formateurs);
+    }
+    
 
 }
 

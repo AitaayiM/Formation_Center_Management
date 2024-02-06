@@ -7,6 +7,7 @@
               {{form?.description}}.
           </p>
           <span class="see-more" (click)="onSeeMoreClick(form)">See more</span>
+          <span class="see-more" (click)="onPlanClick(form)">Plan</span>
       </div>
       <div class="date-box">
         <div  *ngFor="let planification of form?.planifications">
@@ -17,6 +18,13 @@
   </div>
 </div>
 </div>
-<div class="right-side-component " *ngIf="dataFormationComponent">
-  <app-data-formation></app-data-formation>
+<div class="right-side-component">
+  <div class="plan-seeMore">
+    <ng-container  *ngIf="dataFormationComponent">
+      <app-data-formation></app-data-formation>
+    </ng-container>
+    <ng-container  *ngIf="planificationVisible">
+      <app-planification></app-planification>
+    </ng-container>
+  </div>
 </div>

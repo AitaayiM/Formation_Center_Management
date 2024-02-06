@@ -11,6 +11,7 @@ export class ListFormationComponent implements OnInit {
 
   selectedFormation: any;
   dataFormationComponent: boolean = false;
+  planificationVisible: boolean = false;
   blur: String = "";
 
   ngOnInit(): void {
@@ -38,6 +39,17 @@ export class ListFormationComponent implements OnInit {
 
   onSeeMoreClick(formation: any): void {
     this.dataFormationComponent = true;
+    this.blur="filter : blur(50px)";
+    this.selectedFormation= formation;
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  onPlanClick(formation: any): void{
+    this.planificationVisible = true;
     this.blur="filter : blur(50px)";
     this.selectedFormation= formation;
     window.scroll({

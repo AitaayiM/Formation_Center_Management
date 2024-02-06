@@ -17,6 +17,30 @@ export class SharedService {
     return this.http.get(this.url+'/formations/all');
   }
 
+  addPlanification(planification: any){
+    return this.http.post(this.url+"/admin/planifications", planification)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        switch (error.status) {
+          case 201:
+            errorMessage = 'Planification successfully added.';
+            break;
+          case 400:
+            if (error.error) {
+              // Récupérer les messages d'erreur renvoyés par le backend
+              errorMessage = Object.values(error.error).join('\n');
+            }
+            break;
+          default:
+            errorMessage ='An error occurred while adding the planification.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
   addIndividu(formationId: any, individu: any): Observable<any>{
     return this.http.post(this.url+"/inscriptions/individu?formationId="+formationId+"", individu)
     .pipe(
@@ -95,6 +119,11 @@ export class SharedService {
       })
     );
   }
+
+  getAllFormateurs(){
+    return this.http.get(this.url+"/formateurs/all");
+  }
+
   addUser(user: any, userType: any): Observable<any>{
     return this.http.post(this.url+"/auth/admin/signup?userType="+userType+"", user)
     .pipe(

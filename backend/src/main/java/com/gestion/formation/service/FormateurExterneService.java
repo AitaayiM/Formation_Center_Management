@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.gestion.formation.entity.Formateur;
 import com.gestion.formation.repository.FormateurRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,10 @@ public class FormateurExterneService {
             return formateurUsername.get();
         }
         return formateurEmail;
+    }
+
+    public List<Formateur> getAllFormateurs() {
+        return formateurRepository.findAll(); 
     }
 }
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add company</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class="main-block">
+    <form  (submit)="addPlanification()">
+        <div class="info__close" (click)="onClose()"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20"><path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path></svg></div>
+      <div class="title">
+        <h3>Add planification</h3>
+      </div>
+      <div class="info">
+        <label>Formation : {{list.selectedFormation?.titre}}</label>
+        <select name="formateur" [(ngModel)]="planification.formateur.id" required>
+            <ng-container *ngFor="let form of formateurs">
+                <option value="{{form.id}}">{{form.name}}</option>
+            </ng-container>
+        </select>
+        <select name="entreprise" [(ngModel)]="planification.entreprise.id" required>
+            <ng-container *ngFor="let company of companies">
+                <option value="{{company.id}}">{{company.nom}}</option>
+            </ng-container>
+        </select>
+        <label for="debut">Start date :</label>
+        <input type="date" name="dateDebut" id="debut" [(ngModel)]="planification.dateDebut" required>
+        <label for="fin">End date :</label>
+        <input type="date" name="dateFin" id="fin" [(ngModel)]="planification.dateFin" required>
+      </div>
+      <div *ngIf="Message" class="error-message">{{ Message }}</div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+
+</html>
+

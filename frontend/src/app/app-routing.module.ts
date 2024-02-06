@@ -5,6 +5,8 @@ import { ListFormationComponent } from './list-formation/list-formation.componen
 import { AddAdminAssistantComponent } from './add-admin-assistant/add-admin-assistant.component';
 import { AddNewFormationComponent } from './add-new-formation/add-new-formation.component';
 import { ListCompanyComponent } from './list-company/list-company.component';
+import { DataFormationComponent } from './list-formation/data-formation/data-formation.component';
+import { PlanificationComponent } from './list-formation/planification/planification.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'/home', pathMatch:'full'},
