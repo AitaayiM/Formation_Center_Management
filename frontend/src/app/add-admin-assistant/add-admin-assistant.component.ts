@@ -37,7 +37,7 @@ export class AddAdminAssistantComponent implements OnInit {
         }
       )
     }else{
-      this.Message='Please fill out all fields.';
+      this.Message='Please fill out all fields with valid data.';
     }
   }
   validateFields(): boolean {
@@ -45,6 +45,7 @@ export class AddAdminAssistantComponent implements OnInit {
       this.user.name.trim() !== '' &&
       this.user.username.trim() !== '' &&
       this.user.email.trim() !== '' &&
+      this.user.email.match(this.shared.emailPattern)? true:false &&
       this.user.password.trim() !== '' &&
       this.userType.trim() !== ''
     );

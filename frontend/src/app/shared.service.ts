@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/internal/operators/catchError';
 })
 export class SharedService {
   url = 'http://localhost:8081';
+  emailPattern = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
   formations : any;
   constructor(private http: HttpClient) { }
 
@@ -113,6 +114,56 @@ export class SharedService {
             break;
           default:
             errorMessage ='An error occurred while adding the User.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  addNewFormation(formation: any){
+    return this.http.post(this.url+"/formations/admin", formation)
+    .pipe(
+      catchError((error: HttpErrorResponse)=>{
+        let errorMessage = 'An error occurred while adding the formation.';
+        switch (error.status) {
+          case 201:
+            errorMessage = 'Formation successfully added';
+            break;
+          case 400:
+            if (error.error) {
+              errorMessage = Object.values(error.error).join('\n');
+            }
+            break;
+          default:
+            errorMessage ='An error occurred while adding the formation.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  getAllCompanies(){
+    return this.http.get(this.url+'/admin/entreprises');
+  }
+
+  addNewCompany(company: any){
+    return this.http.post(this.url+"/admin/entreprises", company)
+    .pipe(
+      catchError((error: HttpErrorResponse)=>{
+        let errorMessage = 'An error occurred while adding the company.';
+        switch (error.status) {
+          case 201:
+            errorMessage = 'Company successfully added';
+            break;
+          case 400:
+            if (error.error) {
+              errorMessage = Object.values(error.error).join('\n');
+            }
+            break;
+          default:
+            errorMessage ='An error occurred while adding the company.';
             break;
         }
         return throwError(errorMessage);

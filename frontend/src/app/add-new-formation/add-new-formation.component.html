@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Formation</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class="main-block">
+    <div class="left-part">
+      <i class="fas fa-graduation-cap"></i>
+      <h1>ADD FORMATION</h1>
+      <p>CenterUniv provides perfect environment for training.</p>
+    </div>
+    <form  (submit)="addFormation()">
+      <div class="title">
+        <i class="fas fa-pencil-alt"></i>
+        <h2>Register here</h2>
+      </div>
+      <div class="info">
+        <input type="text" name="titre" placeholder="Titre" [(ngModel)]="formation.titre" required>
+        <input type="text" name="nombreHeures" placeholder="Number of hours" [(ngModel)]="formation.nombreHeures" required>
+        <input type="text" name="cout" placeholder="Cost" [(ngModel)]="formation.cout" required>
+        <input type="text" name="description" placeholder="Description" [(ngModel)]="formation.description" required>
+        <input type="text" name="categorie" placeholder="Category" [(ngModel)]="formation.categorie" required>
+        <input type="text" name="ville" placeholder="City" [(ngModel)]="formation.ville" required>
+        <label>Objectifs</label>
+          <input type="text" name="description" placeholder="Description" [(ngModel)]="newObjectif.description" required>
+          <ng-container *ngIf="errorObjectif" class="error-message">{{ errorObjectif }}</ng-container>
+          <button type="button" class="btn btn-primary" (click)="addObjectif()">Add objectif</button>
+          <ul class="character">
+            <li *ngFor="let objectif of formation.objectifs">{{ objectif.description }}</li>
+          </ul>
+        <label>Sections</label>
+          <input type="text" name="title" placeholder="Title" [(ngModel)]="newSection.title" required>
+          <ul class="character">
+            <li *ngFor="let section of formation.sections; let i = index">
+            <div>{{ section.title }}</div>
+            <label>Course</label>
+            <input type="text" name="title" placeholder="Title" [(ngModel)]="newCours.title" required>
+            <ng-container *ngIf="errorCours" class="error-message">{{ errorCours }}</ng-container>
+            <ul>
+              <li *ngFor="let course of section.cours">{{ course.title }}</li>
+            </ul>
+            <button type="button" class="btn btn-primary" (click)="addCours(i)">Add course</button>
+            </li>
+          </ul>
+        <ng-container *ngIf="errorSection" class="error-message">{{ errorSection }}</ng-container>
+        <button type="button" class="btn btn-primary" (click)="addSection()">Add section</button> 
+      </div>
+      <div *ngIf="Message" class="error-message">{{ Message }}</div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+
+</html>
+

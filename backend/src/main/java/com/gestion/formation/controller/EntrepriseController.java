@@ -3,10 +3,14 @@ package com.gestion.formation.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.gestion.formation.entity.Entreprise;
 import com.gestion.formation.service.EntrepriseService;
+import com.gestion.formation.util.Validator;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -18,8 +22,11 @@ public class EntrepriseController {
     private EntrepriseService entrepriseService;
 
     @PostMapping
-    public ResponseEntity<String> ajouterEntreprise(@RequestBody Entreprise entreprise) {
+    public ResponseEntity<?> ajouterEntreprise(@Valid @RequestBody Entreprise entreprise, BindingResult bindingResult) {
         try {
+            if (bindingResult.hasErrors()) {
+                return new ResponseEntity<>(Validator.getValidationErrors(bindingResult), HttpStatus.BAD_REQUEST);
+            }
             entrepriseService.ajouterEntreprise(entreprise);
             return new ResponseEntity<>("Entreprise ajouté avec succès", HttpStatus.CREATED);
         } catch (Exception e) {

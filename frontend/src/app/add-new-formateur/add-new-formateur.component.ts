@@ -87,7 +87,7 @@ export class AddNewFormateurComponent implements OnInit {
         }
       );
     }else{
-      this.Message='Please fill out all fields.';
+      this.Message='Please fill out all fields with valid data.';
     }
   }
 
@@ -121,6 +121,7 @@ export class AddNewFormateurComponent implements OnInit {
       this.coach.name.trim() !== '' &&
       this.coach.username.trim() !== '' &&
       this.coach.email.trim() !== '' &&
+      this.coach.email.match(this.shared.emailPattern)? true:false &&
       this.coach.password.trim() !== '' &&
       this.coach.competences.length > 0 &&
       this.coach.competences.every(c => c.domain.trim() !== '' && c.level.trim() !== '') &&

@@ -1,0 +1,20 @@
+<div *ngFor="let company of companies">
+    <div class="parent">
+    <article class="card">
+        <div class="card-img">
+          <div class="card-imgs pv delete"></div>
+        </div>
+        <div class="project-info">
+          <div class="flex">
+            <div class="project-title">{{company.nom}}</div>
+            <span class="tag">{{company.telephone}}</span>
+          </div>
+          <span>
+            <p>{{company.adresse}}</p>
+            <p>{{company.email}}</p>
+            <p>{{company.url}}</p>
+          </span>
+        </div>
+    </article>   
+    </div>
+</div>

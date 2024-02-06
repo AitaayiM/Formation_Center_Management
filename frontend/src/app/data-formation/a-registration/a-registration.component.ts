@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../shared.service';
-import { ListFormationComponent } from '../list-formation/list-formation.component';
+import { ListFormationComponent } from '../../list-formation/list-formation.component';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-a-registration',
@@ -42,7 +42,7 @@ export class ARegistrationComponent implements OnInit {
         }
       );
     }else{
-      this.Message='Please fill out all fields.';
+      this.Message='Please fill out all fields with valid data.';
     }
   }
 
@@ -53,6 +53,7 @@ export class ARegistrationComponent implements OnInit {
       this.individu.dateNaissance.trim() !== '' &&
       this.individu.ville.trim() !=='' &&
       this.individu.email !== '' &&
+      this.individu.email.match(this.shared.emailPattern)? true:false &&
       this.individu.telephone !== ''
     );
   }

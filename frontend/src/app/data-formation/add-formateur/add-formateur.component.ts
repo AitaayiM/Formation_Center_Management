@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../shared.service';
-import { ListFormationComponent } from '../list-formation/list-formation.component';
+import { ListFormationComponent } from '../../list-formation/list-formation.component';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-add-formateur',
