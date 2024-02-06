@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListFormationComponent } from '../list-formation/list-formation.component';
+import { ListFormationComponent } from '../list-formation.component';
 
 @Component({
   selector: 'app-data-formation',

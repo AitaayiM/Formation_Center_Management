@@ -8,6 +8,7 @@ import { SharedService } from '../shared.service';
 })
 export class ListCompanyComponent implements OnInit {
   companies: any;
+  formComapanyVisible: boolean = false;
 
   constructor(private shared: SharedService) { }
 
@@ -20,6 +21,10 @@ export class ListCompanyComponent implements OnInit {
         console.error('Error loading companies:', err);
       }
     );
+  }
+
+  onClickAdd(){
+    this.formComapanyVisible = true;
   }
 
 }

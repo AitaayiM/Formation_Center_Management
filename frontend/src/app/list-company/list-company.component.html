@@ -1,20 +1,32 @@
+<button type="button" class="button" style="background: none;border: none;" (click)="onClickAdd()">
+  <span class="button__text">Add New Company</span>
+  <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+</button>
 <div *ngFor="let company of companies">
     <div class="parent">
     <article class="card">
         <div class="card-img">
-          <div class="card-imgs pv delete"></div>
+          <div class="card-imgs pv delete">
+            <div class="project-title">{{company.nom}}</div>
+          </div>
         </div>
         <div class="project-info">
           <div class="flex">
-            <div class="project-title">{{company.nom}}</div>
-            <span class="tag">{{company.telephone}}</span>
+            <span class="tag">Phone : {{company.telephone}}</span>
           </div>
           <span>
-            <p>{{company.adresse}}</p>
-            <p>{{company.email}}</p>
-            <p>{{company.url}}</p>
+            <p>Address : {{company.adresse}}</p>
+            <p>Email: {{company.email}}</p>
+            <p>Site: {{company.url}}</p>
           </span>
         </div>
     </article>   
     </div>
+</div>
+<div class="right-side-component">
+  <div class="add-company">
+    <ng-container *ngIf="formComapanyVisible">
+      <app-add-new-entreprise></app-add-new-entreprise>
+    </ng-container>
+  </div>
 </div>

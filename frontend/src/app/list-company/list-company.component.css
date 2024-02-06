@@ -6,21 +6,22 @@
   }
 
 .project-info {
-    padding: 25px 40px;
+    padding: 25px 25px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     position: relative;
     top: -50px;
+    width: 150%;
   }
   
   .project-title {
     font-weight: 700;
-    font-size: 2em;
-    overflow: hidden;
+    font-size: 1.25em;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: black;
+    margin: 0 auto;
   }
   
   .flex {
@@ -61,7 +62,7 @@
   
   .card-img {
     position: relative;
-    top: -50px;
+    top: -40px;
     height: 100px;
     display: flex;
     justify-content: center;
@@ -70,12 +71,13 @@
   /* Change the .card-img div to .card-img img to use img*/
   .card-img a,
   .card-img div {
-    height: 100px;
+    height: 100%;
     width: 85%;
     /* Change this width here to change the width of the color/image */
     object-fit: cover;
     border-radius: 8px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
   }
   
   .pv:hover {
@@ -85,4 +87,81 @@
   .card-imgs {
     transition: all 0.5s;
   }
+
+  /* add Company data*/
+  .right-side-component {
+    width: 100%;
+    position: absolute;
+    z-index: 10000000;
+    right:0;
+  }
   
+  .add-company{
+    position: relative;
+    background-color: #ffffff;
+    box-shadow: 1px 0px 28px 4px #0bdd12;
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+    width: 600px;
+  }
+
+  /* Add Company Button */
+
+  .button {
+    position: relative;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin:5px auto
+  }
+   
+  .button .button__text {
+    transform: translateX(30px);
+    color: #167dd1;
+    font-weight: 600;
+  }
+  .button .button__text:hover {
+    color: #0f3a5e;
+  }
+  
+  .button .button__icon {
+    position: absolute;
+    transform: translateX(190px);
+    height: 30px;
+    width: 39px;
+    border-radius: 50px;
+    background-color: #167dd1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button .button__icon:hover{
+    background-color: #0f3a5e;
+  }
+  
+  .button .svg {
+    width: 30px;
+    stroke: #fff;
+  }
+  
+  /* form Add Company Component */
+.right-side-component {
+  width: 100%;
+  position: absolute;
+  z-index: 10000000;
+  right:0;
+}
+
+.add-company {
+  position: relative;
+  background-color: #ffffff;
+  box-shadow: 1px 0px 28px 4px #0bdd12;
+  display: block;
+  margin: auto;
+  border-radius: 10px;
+  width: 600px;
+
+}
