@@ -1,0 +1,48 @@
+<div class="container">
+    <table id="myTable" class="table table-bordered table-hover">
+        <thead class="thead-white">
+            <tr>
+                <th>Trainee</th>
+                <th>Formation</th>
+                <th>Coach</th>
+                <th>Group</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let individu of individus">
+                <tr *ngFor="let formation of individu?.formations">
+                    <td>{{ individu.nom }}</td>
+                    <td>
+                        <select [(ngModel)]="group.formation.id">
+                            <option value="{{ formation.id }}">{{ formation.titre }} - {{ formation.id }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select [(ngModel)]="group.formateur.id">
+                            <option value="">Select a coach</option>
+                            <option *ngFor="let plan of plans" [value]="plan.formateur.id">{{ plan.formateur.name }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let group of individu?.groupes">
+                            {{ group?.nom }}
+                        </ng-container>
+                    </td>
+                    <td><input type="checkbox" [checked]="isSelected(formation.id)" (change)="toggleSelection(formation.id)"></td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div *ngIf="Message" class="error-message">{{ Message }}</div>
+</div>
+
+<button type="button" class="button" style="background: none;border: none;">
+    <span class="button__text"><input type="text" name="nom" placeholder="Add to group" [(ngModel)]="group.nom"></span>
+    <span class="button__icon"  (click)="addToGroup()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+            <line y2="19" y1="5" x2="12" x1="12"></line>
+            <line y2="12" y1="12" x2="19" x1="5"></line>
+        </svg>
+    </span>
+</button>

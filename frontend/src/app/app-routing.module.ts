@@ -7,6 +7,7 @@ import { AddNewFormationComponent } from './add-new-formation/add-new-formation.
 import { ListCompanyComponent } from './list-company/list-company.component';
 import { DataFormationComponent } from './list-formation/data-formation/data-formation.component';
 import { PlanificationComponent } from './list-formation/planification/planification.component';
+import { ListTraineeComponent } from './list-trainee/list-trainee.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'/home', pathMatch:'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path:'addNewCoach', component: AddNewFormateurComponent},
   {path:'addAdminAssistant', component: AddAdminAssistantComponent},
   {path:'addNewFormation', component: AddNewFormationComponent},
-  {path: 'listCompany', component: ListCompanyComponent}
+  {path: 'listCompany', component: ListCompanyComponent},
+  {path: 'listTrainee', component: ListTraineeComponent}
 ];
 
 @NgModule({

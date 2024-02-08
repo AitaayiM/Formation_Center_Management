@@ -1,0 +1,41 @@
+/* add groupe button*/
+
+.button {
+    position: relative;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin:5px auto
+  }
+   
+  .button .button__text {
+    transform: translateX(30px);
+    color: #167dd1;
+    font-weight: 600;
+  }
+  .button .button__text:hover {
+    color: #0f3a5e;
+  }
+  
+  .button .button__icon {
+    position: absolute;
+    transform: translateX(190px);
+    height: 30px;
+    width: 39px;
+    border-radius: 50px;
+    background-color: #167dd1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button .button__icon:hover{
+    background-color: #0f3a5e;
+  }
+  
+  .button .svg {
+    width: 30px;
+    stroke: #fff;
+  }
+  

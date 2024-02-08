@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/internal/operators/catchError';
   providedIn: 'root'
 })
 export class SharedService {
+
   url = 'http://localhost:8081';
   emailPattern = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
   formations : any;
@@ -39,6 +40,42 @@ export class SharedService {
         return throwError(errorMessage);
       })
     );
+  }
+
+  getPlanificationsWithDetails(){
+    return this.http.get(this.url+"/admin/planifications/details");
+  }
+
+  addToGroupe(groupe: any, individuIds: number[]){
+    const urlWithParams = `${individuIds.map(id => `individuIds=${id}`).join('&')}`;
+    return this.http.post(this.url+"/admin/groupe/affecter-formateur?"+urlWithParams+"", groupe)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        switch (error.status) {
+          case 200:
+            errorMessage = 'Group successfully added.';
+            break;
+          case 500:
+            errorMessage = 'An error occurred while adding the group.';
+            break;
+          case 404:
+            if (error.error) {
+              // Récupérer les messages d'erreur renvoyés par le backend
+              errorMessage = Object.values(error.error).join('\n');
+            }
+            break;
+          default:
+            errorMessage ='An error occurred while adding the group.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  getAllIndividus(){
+    return this.http.get(this.url+"/inscriptions/allindividu");
   }
 
   addIndividu(formationId: any, individu: any): Observable<any>{

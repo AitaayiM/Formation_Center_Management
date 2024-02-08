@@ -16,6 +16,7 @@ import { DataFormationComponent } from './list-formation/data-formation/data-for
 import { ListFormationComponent } from './list-formation/list-formation.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PlanificationComponent } from './list-formation/planification/planification.component';
+import { ListTraineeComponent } from './list-trainee/list-trainee.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PlanificationComponent } from './list-formation/planification/planifica
     AddNewFormationComponent,
     AddNewEntrepriseComponent,
     ListCompanyComponent,
-    PlanificationComponent
+    PlanificationComponent,
+    ListTraineeComponent
   ],
   imports: [
     BrowserModule,

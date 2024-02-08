@@ -88,24 +88,6 @@
     transition: all 0.5s;
   }
 
-  /* add Company data*/
-  .right-side-component {
-    width: 100%;
-    position: absolute;
-    z-index: 10000000;
-    right:0;
-  }
-  
-  .add-company{
-    position: relative;
-    background-color: #ffffff;
-    box-shadow: 1px 0px 28px 4px #0bdd12;
-    display: block;
-    margin: auto;
-    border-radius: 10px;
-    width: 600px;
-  }
-
   /* Add Company Button */
 
   .button {
