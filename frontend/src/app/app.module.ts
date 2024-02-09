@@ -17,6 +17,7 @@ import { ListFormationComponent } from './list-formation/list-formation.componen
 import { NavbarComponent } from './navbar/navbar.component';
 import { PlanificationComponent } from './list-formation/planification/planification.component';
 import { ListTraineeComponent } from './list-trainee/list-trainee.component';
+import { SendEmailComponent } from './list-trainee/send-email/send-email.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ListTraineeComponent } from './list-trainee/list-trainee.component';
     AddNewEntrepriseComponent,
     ListCompanyComponent,
     PlanificationComponent,
-    ListTraineeComponent
+    ListTraineeComponent,
+    SendEmailComponent
   ],
   imports: [
     BrowserModule,

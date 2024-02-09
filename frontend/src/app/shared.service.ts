@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { error } from 'jquery';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError } from 'rxjs/internal/operators/catchError';
@@ -18,7 +19,34 @@ export class SharedService {
     return this.http.get(this.url+'/formations/all');
   }
 
-  addPlanification(planification: any){
+  sendEmail(emails: any): Observable<any>{
+    let emailsParams: String = "emails="+emails[0];
+    for (let index = 1; index < emails.length; index++) {
+      let element = emails[index];
+      emailsParams = emailsParams+"&emails="+element;
+    }
+
+    return this.http.post(this.url+"/inscriptions/admin/sendemail?"+emailsParams+"", {})
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        switch (error.status) {
+          case 200:
+            errorMessage = 'The evaluation email has been sent successfully.';
+            break;
+          case 500:
+            errorMessage = 'An error occurred while sending the review email.';
+            break;
+          default:
+            errorMessage ='An error occurred while sending the review email.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  addPlanification(planification: any): Observable<any>{
     return this.http.post(this.url+"/admin/planifications", planification)
     .pipe(
       catchError((error: HttpErrorResponse) => {
@@ -46,9 +74,13 @@ export class SharedService {
     return this.http.get(this.url+"/admin/planifications/details");
   }
 
-  addToGroupe(groupe: any, individuIds: number[]){
-    const urlWithParams = `${individuIds.map(id => `individuIds=${id}`).join('&')}`;
-    return this.http.post(this.url+"/admin/groupe/affecter-formateur?"+urlWithParams+"", groupe)
+  addToGroupe(groupe: any, individuIds: number[]): Observable<any>{
+    let indParams: String = "individuIds="+individuIds[0];
+    for (let index = 1; index < individuIds.length; index++) {
+      let element = individuIds[index];
+      indParams = indParams+"&individuIds="+element;
+    }
+    return this.http.post(this.url+"/admin/groupe/affecter-formateur?"+indParams+"", groupe)
     .pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';

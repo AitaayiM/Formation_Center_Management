@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gestion.formation.dto.GroupDTO;
 import com.gestion.formation.entity.Formateur;
 import com.gestion.formation.entity.Formation;
 import com.gestion.formation.entity.Individu;
@@ -32,7 +33,7 @@ public class GroupeService {
     @Autowired
     private IndividuRepository individuRepository;
 
-    public void inscrireIndividuAFormation(Groupe groupe, List<Long> individuIds) {
+    public void inscrireIndividuAFormation(GroupDTO groupe, List<Long> individuIds) {
         // Créez un groupe pour la formation si nécessaire
         Formation formation = formationRepository.findById(groupe.getFormation().getId())
 	                .orElseThrow(() -> new EntityNotFoundException("Formation non trouvée avec l'ID : " + groupe.getFormation().getId()));   
@@ -49,7 +50,7 @@ public class GroupeService {
 
     }
 
-    private Groupe createOrUpdateGroupe(Groupe groupe, Formation formation, Formateur formateur) {
+    private Groupe createOrUpdateGroupe(GroupDTO groupe, Formation formation, Formateur formateur) {
         // Recherchez un groupe existant pour la formation
         Optional<Groupe> groupeOptional = groupeRepository.findByFormation(formation);
 

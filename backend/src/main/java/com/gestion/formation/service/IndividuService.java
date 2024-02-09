@@ -1,6 +1,7 @@
 package com.gestion.formation.service;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class IndividuService {
 	                .orElseThrow(() -> new EntityNotFoundException("Formation non trouvée avec l'ID : " + formationId));
 	    individu.setFormations(Collections.singletonList(formation));
 	    individuRepository.save(individu);
+	}
+
+	public List<Individu> getListIndividus(){
+		return individuRepository.findAll();
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.gestion.formation.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,16 @@ public class PlanificationService {
 
     public List<Planification> getListePlanifications() {
         return planificationRepository.findAll();
+    }
+
+    public List<PlanificationDTO> getPlanificationsWithDetails() {
+        List<Planification> planifications = planificationRepository.findAll();
+
+        List<PlanificationDTO> planificationDTOs = planifications.stream().map(planification->
+        planificationMapper.planificationToPlanificationDTO(planification))
+        .collect(Collectors.toList());
+
+        return planificationDTOs;
     }
 }
 

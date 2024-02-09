@@ -15,6 +15,7 @@ import com.gestion.formation.dto.PlanificationDTO;
 import com.gestion.formation.entity.Planification;
 import com.gestion.formation.service.PlanificationService;
 
+
 @RestController
 @RequestMapping("/admin/planifications")
 public class PlanificationController {
@@ -37,5 +38,12 @@ public class PlanificationController {
         List<Planification> planifications = planificationService.getListePlanifications();
         return new ResponseEntity<>(planifications, HttpStatus.OK);
     }
+
+    @GetMapping("/details")
+    public ResponseEntity<List<PlanificationDTO>> getListePlanificationsWithDetails() {
+        List<PlanificationDTO> planifications = planificationService.getPlanificationsWithDetails();
+        return new ResponseEntity<>(planifications, HttpStatus.OK);
+    }
+    
 }
 

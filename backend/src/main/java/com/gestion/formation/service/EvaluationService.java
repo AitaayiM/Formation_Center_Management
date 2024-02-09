@@ -42,11 +42,12 @@ public class EvaluationService {
         sendEmail(participantEmail, subject, body);
     }
 
-    public void sendEvaluationEmail(String to, String token) {
+    public void sendEvaluationEmail(String email) {
+        String token = TokenUtil.generateToken(email);
         String subject = "Formulaire d'évaluation de la formation";
         String body = "Bonjour,\n\nVous avez participé à notre formation. Veuillez cliquer sur le lien ci-dessous pour remplir le formulaire d'évaluation :\n\n"
                 + baseUrl + "/evaluation?token=" + token + "\n\nCordialement,\nVotre équipe de formation";
-        sendEmail(to, subject, body);
+        sendEmail(email, subject, body);
     }
 
     public String generateEvaluationToken(String email) {

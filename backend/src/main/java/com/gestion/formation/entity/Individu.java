@@ -12,7 +12,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestion.formation.util.Validator;
 
 import jakarta.persistence.Id;
@@ -52,12 +51,10 @@ public class Individu {
     @Pattern(regexp = ""+Validator.TELEPONE_PATTERN+"", message = "Le numéro de téléphone doit contenir 10 chiffres")
     private String telephone;
 
-    @JsonIgnore
     @ManyToMany
     private List<Formation> formations;
 
     @ManyToMany(mappedBy = "individus")
-    @JsonIgnore
     private List<Groupe> groupes;
 
 }

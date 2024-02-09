@@ -15,6 +15,9 @@ export class ListTraineeComponent implements OnInit {
   plans: any;
   Message: any;
   SelectedTrainee: number[] = [];
+  blur: String = "";
+  sendEmailVisible: boolean = false;
+
   group = {
     "nom": "",
     "formateur":{"id":""},
@@ -39,6 +42,7 @@ export class ListTraineeComponent implements OnInit {
       }
     )
   }
+  
 
   addToGroup() {
 
@@ -62,26 +66,31 @@ export class ListTraineeComponent implements OnInit {
             this.Message = err;
         }
     );
-}
+  }
 
-isSelected(formationId: number): boolean {
-    return this.SelectedTrainee.includes(formationId);
-}
+  isSelected(formationId: number): boolean {
+      return this.SelectedTrainee.includes(formationId);
+  }
 
-toggleSelection(formationId: number) {
-    if (this.isSelected(formationId)) {
-        this.SelectedTrainee = this.SelectedTrainee.filter(id => id !== formationId);
-    } else {
-        this.SelectedTrainee.push(formationId);
-    }
-}
+  toggleSelection(formationId: number) {
+      if (this.isSelected(formationId)) {
+          this.SelectedTrainee = this.SelectedTrainee.filter(id => id !== formationId);
+      } else {
+          this.SelectedTrainee.push(formationId);
+      }
+  }
 
-validateFields(): boolean {
-    return (
-        this.group.nom.trim() !== '' &&
-        this.group.formateur.id !== '' &&
-        this.group.formation.id !== '' &&
-        this.SelectedTrainee.length > 0
-    );
-}
+  validateFields(): boolean {
+      return (
+          this.group.nom.trim() !== '' &&
+          this.group.formateur.id !== '' &&
+          this.group.formation.id !== '' &&
+          this.SelectedTrainee.length > 0
+      );
+  }
+
+  onSendClick(){
+    this.blur="filter : blur(50px)";
+    this.sendEmailVisible = true;
+  }
 }

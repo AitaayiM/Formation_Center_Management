@@ -9,7 +9,7 @@ public class TokenUtil {
 
     //private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static SecretKey key = Jwts.SIG.HS256.key().build();
-    private static final long expirationTimeInMillis = 3600000; // 1 heure
+    private static final long expirationTimeInMillis = 86400000; // 1 day
 
     public static String generateToken(String email) {
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
