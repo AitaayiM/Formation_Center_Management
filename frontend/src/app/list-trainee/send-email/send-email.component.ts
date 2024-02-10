@@ -9,6 +9,7 @@ import { SharedService } from 'src/app/shared.service';
 })
 export class SendEmailComponent implements OnInit {
   emailsList: string[] = [];
+  formation: any;
   Message: any;
 
   constructor(private shared: SharedService, public listT: ListTraineeComponent) { }
@@ -18,7 +19,7 @@ export class SendEmailComponent implements OnInit {
 
   sendEmail(){
     this.collectExpiredEmails(this.emailsList);
-    this.shared.sendEmail(this.emailsList).subscribe(
+    this.shared.sendEmail(this.emailsList, this.formation).subscribe(
       res=>{
         this.Message = res;
       },
@@ -37,8 +38,10 @@ export class SendEmailComponent implements OnInit {
   collectExpiredEmails(listT: any): void {
     this.listT.individus.forEach((individu: any) => {
       if (this.isDateExpired(individu?.formations?.planifications?.dateFin)) {
-        alert("email :"+individu?.email);
         this.emailsList.push(individu?.email);
+        for (let formation of individu?.formations) {
+          this.formation = formation?.id;
+        }
       }
     });
   }

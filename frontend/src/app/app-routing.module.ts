@@ -8,6 +8,7 @@ import { ListCompanyComponent } from './list-company/list-company.component';
 import { DataFormationComponent } from './list-formation/data-formation/data-formation.component';
 import { PlanificationComponent } from './list-formation/planification/planification.component';
 import { ListTraineeComponent } from './list-trainee/list-trainee.component';
+import { ReviewComponent } from './review/review.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'/home', pathMatch:'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:'addAdminAssistant', component: AddAdminAssistantComponent},
   {path:'addNewFormation', component: AddNewFormationComponent},
   {path: 'listCompany', component: ListCompanyComponent},
-  {path: 'listTrainee', component: ListTraineeComponent}
+  {path: 'listTrainee', component: ListTraineeComponent},
+  {path: 'review', component: ReviewComponent}
 ];
 
 @NgModule({

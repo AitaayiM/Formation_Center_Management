@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion.formation.entity.Individu;
-import com.gestion.formation.service.EvaluationService;
 import com.gestion.formation.service.IndividuService;
 import com.gestion.formation.util.Validator;
 
@@ -28,31 +27,6 @@ public class IndividuController {
     @Autowired
 	private IndividuService individuService;
 
-    @Autowired
-    private EvaluationService evaluationService;
-
-    @PostMapping("/admin/send")
-    public ResponseEntity<String> inscrireIndividus(@RequestParam String individuEmail, @RequestParam Long formationId) {
-        try{
-            evaluationService.sendEvaluationFormLink(individuEmail, formationId);
-            return new ResponseEntity<>("message sending successfully.", HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/admin/sendemail")
-    public ResponseEntity<String> sendEvaluationEmail(@RequestParam List<String> emails) {
-        try {
-            for (String email : emails) {
-                evaluationService.sendEvaluationEmail(email);
-            }
-            return ResponseEntity.ok("The evaluation email has been sent successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while sending the review email.");
-        }
-    }
-
     @PostMapping("/individu")
     public ResponseEntity<?> inscrireIndividu(@RequestParam Long formationId, @RequestBody @Valid Individu individu, BindingResult bindingResult) {
         try {
@@ -62,7 +36,7 @@ public class IndividuController {
             }
     
             individuService.inscrireIndividu(formationId, individu);
-            return new ResponseEntity<>("Individu ajouté avec succès", HttpStatus.CREATED);
+            return new ResponseEntity<>("Individual successfully added", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

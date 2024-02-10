@@ -9,7 +9,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.gestion.formation.entity.Evaluation;
+import com.gestion.formation.entity.Formation;
 import com.gestion.formation.repository.EvaluationRepository;
+import com.gestion.formation.repository.FormationRepository;
 import com.gestion.formation.util.TokenUtil;
 
 @Service
@@ -17,6 +19,9 @@ public class EvaluationService {
  
     @Autowired
     private EvaluationRepository evaluationRepository;
+
+     @Autowired
+    private FormationRepository formationRepository;
  
     @Autowired
     private JavaMailSender mailSender;
@@ -33,20 +38,11 @@ public class EvaluationService {
         mailSender.send(message);
     }
 
-    public void sendEvaluationFormLink(String participantEmail, Long formationId) {
-        String evaluationFormLink = "https://votre-domaine.com/formulaire-evaluation?formationId=" + formationId;
-
-        String subject = "Formulaire d'évaluation de la formation";
-        String body = "Cher participant,\n\nMerci d'avoir participé à notre formation. Veuillez cliquer sur le lien ci-dessous pour accéder au formulaire d'évaluation :\n\n" + evaluationFormLink + "\n\nCordialement,\nVotre équipe de formation";
-
-        sendEmail(participantEmail, subject, body);
-    }
-
-    public void sendEvaluationEmail(String email) {
+    public void sendEvaluationEmail(String email, Long formationId) {
         String token = TokenUtil.generateToken(email);
         String subject = "Formulaire d'évaluation de la formation";
         String body = "Bonjour,\n\nVous avez participé à notre formation. Veuillez cliquer sur le lien ci-dessous pour remplir le formulaire d'évaluation :\n\n"
-                + baseUrl + "/evaluation?token=" + token + "\n\nCordialement,\nVotre équipe de formation";
+                + baseUrl + "?formationId="+formationId+"&token="+token+"\n\nCordialement,\nVotre équipe de formation";
         sendEmail(email, subject, body);
     }
 
@@ -58,14 +54,12 @@ public class EvaluationService {
         return TokenUtil.validateToken(token, email);
     }
  
-    public Evaluation createEvaluation(Evaluation evaluation) {
+    public Evaluation createEvaluation(Evaluation evaluation, Long formationId) {
+        Formation formation = formationRepository.findById(formationId)
+                .orElseThrow(() -> new IllegalArgumentException("Formation not found with id: " + formationId));
+
+        evaluation.setFormation(formation);
         return evaluationRepository.save(evaluation);
     }
-
-    public List<Evaluation> getEvaluationsByFormation(Long formationId) {
-        return evaluationRepository.findByFormationId(formationId);
-    }
-
-
     
 }

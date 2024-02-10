@@ -19,14 +19,14 @@ export class SharedService {
     return this.http.get(this.url+'/formations/all');
   }
 
-  sendEmail(emails: any): Observable<any>{
+  sendEmail(emails: any, formationId: any): Observable<any>{
     let emailsParams: String = "emails="+emails[0];
     for (let index = 1; index < emails.length; index++) {
       let element = emails[index];
       emailsParams = emailsParams+"&emails="+element;
     }
 
-    return this.http.post(this.url+"/inscriptions/admin/sendemail?"+emailsParams+"", {})
+    return this.http.post(this.url+"/admin/sendemail?formationId="+formationId+"&"+emailsParams+"", {})
     .pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
@@ -39,6 +39,37 @@ export class SharedService {
             break;
           default:
             errorMessage ='An error occurred while sending the review email.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  validateToken(token: string, email: String): Observable<boolean> {
+    return this.http.post<boolean>(this.url+"/evaluation/validate?email="+email+"&token="+token+"", {});
+  }
+
+  sendReview(review: any, fomationId: any){
+    return this.http.post(this.url+"/review?formationId="+fomationId+"", review)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        switch (error.status) {
+          case 200:
+            errorMessage = 'Review successfully added.';
+            break;
+          case 400:
+            if (error.error) {
+              // Récupérer les messages d'erreur renvoyés par le backend
+              errorMessage = Object.values(error.error).join('\n');
+            }
+            break;
+          case 500:
+            errorMessage = 'An error occurred while adding the review.';
+            break;
+          default:
+            errorMessage ='An error occurred while adding the review.';
             break;
         }
         return throwError(errorMessage);

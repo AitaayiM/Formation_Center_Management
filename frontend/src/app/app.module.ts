@@ -18,6 +18,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PlanificationComponent } from './list-formation/planification/planification.component';
 import { ListTraineeComponent } from './list-trainee/list-trainee.component';
 import { SendEmailComponent } from './list-trainee/send-email/send-email.component';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SendEmailComponent } from './list-trainee/send-email/send-email.compone
     ListCompanyComponent,
     PlanificationComponent,
     ListTraineeComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,
