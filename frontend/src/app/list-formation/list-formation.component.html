@@ -5,7 +5,9 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
       <li><a class="dropdown-item" (click)="displayFormations()">All</a></li>
-      <li *ngFor="let dat of date"><a class="dropdown-item" (click)="filterByDate(dat)">{{date.toString().split(",")[0]}}</a></li>
+      <li *ngFor="let dat of date; let i = index;">
+        <a class="dropdown-item" (click)="filterByDate(dat)">{{ dat }}</a>
+      </li>
     </ul>
   </li>
   <li class="nav-item dropdown ">
