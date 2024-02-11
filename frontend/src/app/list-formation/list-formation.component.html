@@ -1,4 +1,33 @@
-<div *ngFor="let form of shared.formations" [style] = "blur">
+<button type="button" class="button dropdown-menu" style="background: none;border: none;">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Date
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+      <li><a class="dropdown-item" (click)="displayFormations()">All</a></li>
+      <li *ngFor="let dat of date"><a class="dropdown-item" (click)="filterByDate(dat)">{{date.toString().split(",")[0]}}</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      City
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+      <li><a class="dropdown-item" (click)="displayFormations()">All</a></li>
+      <li *ngFor="let cit of city"><a class="dropdown-item" (click)="filterByCity(cit)">{{cit}}</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Category
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+      <li><a class="dropdown-item" (click)="displayFormations()">All</a></li>
+      <li *ngFor="let categorie of category"><a class="dropdown-item" (click)="filterByCategory(categorie)">{{categorie}}</a></li>
+    </ul>
+  </li>
+</button>
+<div *ngFor="let form of ActualFormations" [style] = "blur">
 <div class="parent">
   <div class="card">
       <div class="content-box">

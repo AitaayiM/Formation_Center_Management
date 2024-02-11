@@ -12,7 +12,8 @@ export class SharedService {
 
   url = 'http://localhost:8081';
   emailPattern = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
-  formations : any;
+  formations: any[] = [];
+  filteredFormations: any[] = [];
   constructor(private http: HttpClient) { }
 
   getAllFormations(){
