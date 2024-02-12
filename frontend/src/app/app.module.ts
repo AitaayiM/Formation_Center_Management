@@ -19,6 +19,7 @@ import { PlanificationComponent } from './list-formation/planification/planifica
 import { ListTraineeComponent } from './list-trainee/list-trainee.component';
 import { SendEmailComponent } from './list-trainee/send-email/send-email.component';
 import { ReviewComponent } from './review/review.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ReviewComponent } from './review/review.component';
     PlanificationComponent,
     ListTraineeComponent,
     SendEmailComponent,
-    ReviewComponent
+    ReviewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

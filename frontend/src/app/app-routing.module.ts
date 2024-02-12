@@ -9,6 +9,7 @@ import { DataFormationComponent } from './list-formation/data-formation/data-for
 import { PlanificationComponent } from './list-formation/planification/planification.component';
 import { ListTraineeComponent } from './list-trainee/list-trainee.component';
 import { ReviewComponent } from './review/review.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'/home', pathMatch:'full'},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path:'addNewFormation', component: AddNewFormationComponent},
   {path: 'listCompany', component: ListCompanyComponent},
   {path: 'listTrainee', component: ListTraineeComponent},
-  {path: 'review', component: ReviewComponent}
+  {path: 'review', component: ReviewComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({

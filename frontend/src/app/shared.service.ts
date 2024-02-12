@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { error } from 'jquery';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
@@ -14,7 +15,7 @@ export class SharedService {
   emailPattern = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
   formations: any[] = [];
   filteredFormations: any[] = [];
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getAllFormations(){
     return this.http.get(this.url+'/formations/all');
@@ -71,6 +72,33 @@ export class SharedService {
             break;
           default:
             errorMessage ='An error occurred while adding the review.';
+            break;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  login(loginDTO: any){
+    return this.http.post(this.url+"/auth/signin", loginDTO)
+    .pipe(
+      catchError((error: HttpErrorResponse)=>{
+        let errorMessage = 'An error occurred while loging.';
+        switch (error.status) {
+          case 200:
+            errorMessage = 'User signed-in successfully!';
+            this.router.navigate(['/home']);
+            break;
+          case 400:
+            if (error.error) {
+              errorMessage = Object.values(error.error).join('\n');
+            }
+            break;
+          case 401:
+            errorMessage = 'Authentication failed.';
+            break;
+          default:
+            errorMessage ='An error occurred while loging.';
             break;
         }
         return throwError(errorMessage);

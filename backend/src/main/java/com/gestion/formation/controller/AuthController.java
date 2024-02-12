@@ -29,7 +29,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @RequestMapping(value = "/signin", method = { RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/signin", method = {RequestMethod.POST})
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginDto, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
