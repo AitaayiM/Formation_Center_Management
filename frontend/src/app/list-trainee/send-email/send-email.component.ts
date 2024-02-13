@@ -38,9 +38,14 @@ export class SendEmailComponent implements OnInit {
   collectExpiredEmails(listT: any): void {
     this.listT.individus.forEach((individu: any) => {
       if (this.isDateExpired(individu?.formations?.planifications?.dateFin)) {
-        this.emailsList.push(individu?.email);
-        for (let formation of individu?.formations) {
-          this.formation = formation?.id;
+        const email = individu?.email;
+        if (email) {
+          this.emailsList.push(individu?.email);
+          for (let formation of individu?.formations) {
+            const formationId = formation?.id;
+            if(formationId)
+              this.formation = formationId;
+          }
         }
       }
     });

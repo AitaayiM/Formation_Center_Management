@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import com.gestion.formation.entity.Role;
 import com.gestion.formation.repository.UserRepository;
@@ -32,7 +31,6 @@ import com.gestion.formation.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@Validated
 @Component
 public class SecurityConfig {
 
@@ -66,23 +64,29 @@ public class SecurityConfig {
         .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize ->
                     authorize
-                    .requestMatchers("/auth/signin").permitAll()
-                    .requestMatchers("/auth/admin/signup**").authenticated()
-                    .requestMatchers("/auth/au/login").permitAll()
-                    .requestMatchers("/admin**").hasRole("ADMIN")
-                    
-        ).securityMatcher("/admin")  
-        .formLogin(form -> form
-        .loginPage("/auth/au/login")
-        .permitAll())
-        .logout(log-> log
-        .logoutSuccessUrl("/login?logout")
-        .permitAll());
+                    .requestMatchers("/auth/signin",
+                    "/auth/role**",
+                    "/formations/all",
+                    "/inscriptions/individu**",
+                    "/formateurs/formations-interessees**",
+                    "/evaluation/validate**",
+                    "/review**",
+                    "/formations/admin",
+                    "/auth/admin/signup**",
+                    "/admin/entreprises",
+                    "/admin/planifications",
+                    "/formateurs/all",
+                    "/admin/groupe/affecter-formateur**",
+                    "/inscriptions/allindividu",
+                    "/admin/planifications/details",
+                    "/admin/sendemail**")
+                    .permitAll()
+        );
         
 
         return http.build();
     }
- 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -96,11 +100,6 @@ public class SecurityConfig {
  
     @Bean
     public UserDetailsService multipleUsers() {
-     /*
-      * Note: do not use withDefaultPasswordEncoder() method in production since its
-      * not recommended and its not safe. This is used only for development and learning purpose , 
-      * use your own password generating methods.
-      */
        List<com.gestion.formation.entity.User> users = userRepository.findAll();;
        UserBuilder user = User.withDefaultPasswordEncoder();
        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();

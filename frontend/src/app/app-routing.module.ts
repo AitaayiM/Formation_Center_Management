@@ -10,17 +10,18 @@ import { PlanificationComponent } from './list-formation/planification/planifica
 import { ListTraineeComponent } from './list-trainee/list-trainee.component';
 import { ReviewComponent } from './review/review.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuardGuard } from './auth-guard.guard';
 
 const routes: Routes = [
   {path:'', redirectTo:'/home', pathMatch:'full'},
-  {path:'home', component: ListFormationComponent},
-  {path:'addNewCoach', component: AddNewFormateurComponent},
-  {path:'addAdminAssistant', component: AddAdminAssistantComponent},
-  {path:'addNewFormation', component: AddNewFormationComponent},
-  {path: 'listCompany', component: ListCompanyComponent},
-  {path: 'listTrainee', component: ListTraineeComponent},
-  {path: 'review', component: ReviewComponent},
-  {path: 'login', component: LoginComponent}
+  {path:'home', component: ListFormationComponent, canActivate: [AuthGuardGuard]},
+  {path:'addNewCoach', component: AddNewFormateurComponent, canActivate: [AuthGuardGuard]},
+  {path:'addAdminAssistant', component: AddAdminAssistantComponent, canActivate: [AuthGuardGuard]},
+  {path:'addNewFormation', component: AddNewFormationComponent, canActivate: [AuthGuardGuard]},
+  {path: 'listCompany', component: ListCompanyComponent, canActivate: [AuthGuardGuard]},
+  {path: 'listTrainee', component: ListTraineeComponent, canActivate: [AuthGuardGuard]},
+  {path: 'review', component: ReviewComponent, canActivate: [AuthGuardGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [AuthGuardGuard]}
 ];
 
 @NgModule({

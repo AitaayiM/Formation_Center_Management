@@ -62,5 +62,6 @@ export class AddNewEntrepriseComponent implements OnInit {
 
   onClose(){
     this.list.formComapanyVisible = false;
+    this.list.ngOnInit();
   }
 }

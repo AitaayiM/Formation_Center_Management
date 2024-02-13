@@ -9,6 +9,7 @@ import com.gestion.formation.entity.Role;
 import com.gestion.formation.entity.User;
 import com.gestion.formation.service.AuthService;
 import com.gestion.formation.util.FormateurValidationGroup;
+import com.gestion.formation.util.TokenUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import com.gestion.formation.repository.UserRepository;
 import com.gestion.formation.repository.RoleRepository;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import jakarta.validation.Valid;
 
@@ -46,7 +48,9 @@ public class AuthService {
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User signed-in successfully!";
+
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        return TokenUtil.generateToken(userDetails.getUsername());
     }
 
     private void mapCommonAttributes(User user, SignUpDTO signUpDto, Role role) {
@@ -91,5 +95,15 @@ public class AuthService {
         userRepository.save(user);
 
         return "User registered successfully";
+    }
+
+    public String extractRoleFromToken(String token){
+        String usernameOrEmail = TokenUtil.extractToken(token);
+        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+        if (user.isPresent()) {
+            return user.get().getRoles().iterator().next().getName();
+        }else{
+            return "user";
+        }
     }
 }

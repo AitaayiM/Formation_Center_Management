@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +21,9 @@ import com.gestion.formation.util.Validator;
 import jakarta.validation.Valid;
 
 
+
 @RestController
 @RequestMapping("/auth")
-@Validated
 public class AuthController {
 
     @Autowired
@@ -35,8 +35,8 @@ public class AuthController {
             if (bindingResult.hasErrors()) {
                 return new ResponseEntity<>(Validator.getValidationErrors(bindingResult), HttpStatus.BAD_REQUEST);
             }
-            String response = authService.authenticateUser(loginDto);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            String token = authService.authenticateUser(loginDto);
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
         }
@@ -62,4 +62,10 @@ public class AuthController {
             return new ResponseEntity<>("Registration failed", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/role")
+    public String getRoleName(@RequestParam String token) {
+        return authService.extractRoleFromToken(token);
+    }
+    
 }

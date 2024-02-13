@@ -31,7 +31,6 @@ export class SharedService {
       let element = emails[index];
       emailsParams = emailsParams+"&emails="+element;
     }
-
     return this.http.post(this.url+"/admin/sendemail?formationId="+formationId+"&"+emailsParams+"", {})
     .pipe(
       catchError((error: HttpErrorResponse) => {

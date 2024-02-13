@@ -61,6 +61,7 @@ export class ListTraineeComponent implements OnInit {
             };
             // Réinitialiser les identifiants d'individus sélectionnés
             this.SelectedTrainee = [];
+            this.ngOnInit();
         },
         err => {
             this.Message = err;

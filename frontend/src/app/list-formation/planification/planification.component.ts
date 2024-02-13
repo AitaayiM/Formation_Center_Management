@@ -76,6 +76,7 @@ export class PlanificationComponent implements OnInit {
   onClose(){
     this.list.planificationVisible=false;
     this.list.blur="";
+    this.list.ngOnInit();
   }
 
 }
