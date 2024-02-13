@@ -40,8 +40,6 @@ export class ReviewComponent implements OnInit {
             this.isValid = true;
             this.Message = "";
           }else{
-            this.isValid = true;
-
             this.Message = 'Invalid email';
           }
         });

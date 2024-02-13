@@ -18,16 +18,28 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(){
-    this.shared.login(this.login).subscribe(
-      res=>{
-        this.login = {
-          "usernameOrEmail": "",
-          "password": ""
+    if(this.validateFields()){
+      this.shared.login(this.login).subscribe(
+        res=>{
+          this.login = {
+            "usernameOrEmail": "",
+            "password": ""
+          }
+        },
+        err=>{
+          this.Message = err;
         }
-      },
-      err=>{
-        this.Message = err;
-      }
+      );
+    }else{
+      this.Message = 'Validation failed. Please fill all required fields.';
+    }
+  }
+
+  validateFields(): boolean {
+    return (
+      this.login.usernameOrEmail.trim() !== '' &&
+      this.login.password.trim() !== '' &&
+      this.login.password.length > 7
     );
   }
 

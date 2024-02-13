@@ -20,32 +20,48 @@
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLinkAdminForm" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Formations
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkAdminForm">
-                    <li><a class="dropdown-item" routerLink="/listTrainee">List of trainees</a></li>
-                    <li><a class="dropdown-item" routerLink="/addNewFormation">Add new formation</a></li>
-                  </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLinkAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administration
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkAdmin">
-                    <li><a class="dropdown-item" routerLink="/addAdminAssistant">Add admin or assistant</a></li>
-                    <li><a class="dropdown-item" routerLink="/addNewCoach">Add coach</a></li>
-                    <li><a class="dropdown-item" routerLink="/listCompany">Companies</a></li>
-                  </ul>
-                </li>
+                <ng-container *ngIf="shared.isLoggedIn()">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLinkAdminForm" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Formations
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkAdminForm">
+                      <ng-container *ngIf="shared.isAdminUser() || shared.isAssistantUser()">
+                        <li><a class="dropdown-item" routerLink="/listTrainee">List of trainees</a></li>
+                      </ng-container>
+                      <ng-container *ngIf="shared.isAdminUser()">
+                        <li><a class="dropdown-item" routerLink="/addNewFormation">Add new formation</a></li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="shared.isLoggedIn()">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLinkAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Administration
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkAdmin">
+                      <ng-container *ngIf="shared.isAdminUser()">
+                        <li><a class="dropdown-item" routerLink="/addAdminAssistant">Add admin or assistant</a></li>
+                        <li><a class="dropdown-item" routerLink="/addNewCoach">Add coach</a></li>
+                      </ng-container>
+                      <ng-container *ngIf="shared.isAdminUser() || shared.isAssistantUser()">
+                        <li><a class="dropdown-item" routerLink="/listCompany">Companies</a></li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                </ng-container>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Profile
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" routerLink="/login">Login</a></li>
-                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                    <ng-container *ngIf="!shared.isLoggedIn()">
+                      <li><a class="dropdown-item" routerLink="/login">Login</a></li>
+                    </ng-container>
+                    <ng-container>
+                      <li><a class="dropdown-item" routerLink="/home" *ngIf="shared.isLoggedIn()">Logout</a></li>
+                    </ng-container>
                   </ul>
                 </li>
               </ul>

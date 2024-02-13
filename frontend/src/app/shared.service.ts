@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { error } from 'jquery';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError } from 'rxjs/internal/operators/catchError';
@@ -15,6 +15,10 @@ export class SharedService {
   emailPattern = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
   formations: any[] = [];
   filteredFormations: any[] = [];
+  private isAuthenticated = false;
+  private isAdmin = false;
+  private isAssistant = false;
+  private isFormateur = false;
   constructor(private http: HttpClient, private router: Router) { }
 
   getAllFormations(){
@@ -82,12 +86,15 @@ export class SharedService {
   login(loginDTO: any){
     return this.http.post(this.url+"/auth/signin", loginDTO)
     .pipe(
+      
       catchError((error: HttpErrorResponse)=>{
         let errorMessage = 'An error occurred while loging.';
         switch (error.status) {
           case 200:
             errorMessage = 'User signed-in successfully!';
-            this.router.navigate(['/home']);
+              const token = JSON.parse(JSON.stringify(Object.values(error.error)));
+              this.refresh((token+"").substring(16));
+              this.router.navigate(['/home']);
             break;
           case 400:
             if (error.error) {
@@ -101,6 +108,64 @@ export class SharedService {
             errorMessage ='An error occurred while loging.';
             break;
         }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  refresh(token: any){
+    this.getRole(token).subscribe(res => {
+    },
+    err=>{
+      this.isAuthenticated = true;
+      switch (err+"") {
+        case "ADMIN":
+          alert("is admin");
+          this.isAdmin = true;
+          break;
+        case "FORMATEUR":
+          this.isFormateur = true;
+          break;
+        case "ASSISTANT":
+          this.isAssistant = true;
+          break;
+        default:
+          break;
+      }
+    }
+    );
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.isAuthenticated = false;
+    this.isAdmin = false;
+    this.isAssistant = false;
+    this.isFormateur = false;
+  }
+
+  isLoggedIn(): boolean {
+    return this.isAuthenticated;
+  }
+
+  isAdminUser(): boolean {
+    return this.isAdmin;
+  }
+
+  isFormateurUser(): boolean {
+    return this.isFormateur;
+  }
+
+  isAssistantUser(): boolean {
+    return this.isAssistant;
+  }
+
+  getRole(token: any): Observable<String>{
+    return this.http.get<String>(this.url+"/auth/role?token="+token, {})
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        errorMessage = (JSON.parse(JSON.stringify(Object.values(error.error).join('\n')))+"").substring(87);
         return throwError(errorMessage);
       })
     );
