@@ -92,9 +92,9 @@ export class SharedService {
         switch (error.status) {
           case 200:
             errorMessage = 'User signed-in successfully!';
-              const token = JSON.parse(JSON.stringify(Object.values(error.error)));
-              this.refresh((token+"").substring(16));
-              this.router.navigate(['/home']);
+            const token = JSON.parse(JSON.stringify(Object.values(error.error)));
+            this.refresh((token+"").substring(16));
+            this.router.navigate(['/home']);
             break;
           case 400:
             if (error.error) {
@@ -120,7 +120,6 @@ export class SharedService {
       this.isAuthenticated = true;
       switch (err+"") {
         case "ADMIN":
-          alert("is admin");
           this.isAdmin = true;
           break;
         case "FORMATEUR":

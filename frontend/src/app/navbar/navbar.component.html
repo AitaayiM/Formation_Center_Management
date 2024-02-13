@@ -59,8 +59,8 @@
                     <ng-container *ngIf="!shared.isLoggedIn()">
                       <li><a class="dropdown-item" routerLink="/login">Login</a></li>
                     </ng-container>
-                    <ng-container>
-                      <li><a class="dropdown-item" routerLink="/home" *ngIf="shared.isLoggedIn()">Logout</a></li>
+                    <ng-container  *ngIf="shared.isLoggedIn()">
+                      <li><a class="dropdown-item" (click)="shared.logout()" routerLink="/home">Logout</a></li>
                     </ng-container>
                   </ul>
                 </li>
